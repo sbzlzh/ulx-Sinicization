@@ -51,9 +51,9 @@ function ulx.map( calling_ply, map, gamemode )
 		ulx.fancyLogAdmin( calling_ply, "#A 使用游戏模式 #s 将地图更改为 #s", map, gamemode )
 	end
 	if gamemode and gamemode ~= "" then
-		game.ConsoleCommand( "游戏模式 " .. gamemode .. "\n" )
+		game.ConsoleCommand( "gamemode " .. gamemode .. "\n" )
 	end
-	game.ConsoleCommand( "更改级别 " .. map ..  "\n" )
+	game.ConsoleCommand( "changelevel " .. map ..  "\n" )
 end
 local map = ulx.command( CATEGORY_NAME, "ulx map", ulx.map, "!map" )
 map:addParam{ type=ULib.cmds.StringArg, completes=ulx.maps, hint="地图", error="无效的地图 \"%s\" 指定的", ULib.cmds.restrictToCompletes }

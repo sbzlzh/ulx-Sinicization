@@ -3,7 +3,7 @@
 
 local server = xlib.makepanel{ parent=xgui.null }
 
---------------------------GMOD 设置--------------------------
+--------------------------GMOD Settings--------------------------
 xlib.makecheckbox{ x=10, y=10, label="启用语音聊天", repconvar="rep_sv_voiceenable", parent=server }
 xlib.makelabel{ x=10, y=33, label="全局设置设置:", parent=server }
 xlib.makecombobox{ x=10, y=50, w=120, repconvar="rep_sv_alltalk", isNumberConvar=true, choices={ "您身边的团队", "仅限团队", "你身边的每一个人", "每个人" }, parent=server }
@@ -19,7 +19,7 @@ xlib.makeslider{ x=10, y=135+offset, label="<--->", w=125, min=-1000, max=1000, 
 xlib.makelabel{ x=10, y=165+offset, label="phys_timescale", parent=server }
 xlib.makeslider{ x=10, y=180+offset, label="<--->", w=125, min=0, max=4, decimal=2, repconvar="rep_phys_timescale", parent=server }
 
-------------------------ULX 类别菜单------------------------
+------------------------ULX Category Menu------------------------
 server.mask = xlib.makepanel{ x=295, y=5, w=290, h=322, parent=server }
 server.panel = xlib.makepanel{ x=5, w=285, h=322, parent=server.mask }
 
@@ -70,7 +70,7 @@ function xgui.openServerModule( name )
 	end
 end
 
---流程模块化设置
+--Process modular settings
 function server.processModules()
 	server.catList:Clear()
 	for i, module in ipairs( xgui.modules.submodule ) do
@@ -102,11 +102,11 @@ xgui.addSettingModule( "Server", server, "icon16/server.png", "xgui_svsettings" 
 
 
 ---------------------------
---服务器设置模块--
+--Server Settings Modules--
 ---------------------------
 --These are submodules that load into the server settings module above.
 
--------------------------管理员投票地图--------------------------
+-------------------------Admin Votemaps--------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
 plist:Add( xlib.makelabel{ label="管理员投票地图设置" } )
 plist:Add( xlib.makelabel{ label="接受地图更改所需的投票率" } )
@@ -115,7 +115,7 @@ plist:Add( xlib.makelabel{ label="成功更改地图的最低投票数" } )
 plist:Add( xlib.makeslider{ label="<--->", min=0, max=10, repconvar="ulx_votemap2Minvotes" } )
 xgui.addSubModule( "ULX 管理员投票地图", plist, nil, "server" )
 
------------------------------广告-----------------------------
+-----------------------------Adverts-----------------------------
 xgui.prepareDataType( "adverts" )
 local adverts = xlib.makepanel{ parent=xgui.null }
 adverts.tree = xlib.maketree{ w=120, h=296, parent=adverts }
@@ -266,15 +266,15 @@ adverts.nodedown.DoClick = function()
 end
 function adverts.removeAdvert( node )
 	if node then
-		Derma_Query( "你确定要删除这个吗 " .. ( node.data and "广告?" or "广告组?" ), "XGUI WARNING",
-		"Delete", function()
+		Derma_Query( "你确定要删除这个吗 " .. ( node.data and "advert?" or "advert group?" ), "XGUI WARNING",
+		"删除", function()
 			if node.data then --Remove a single advert
 				RunConsoleCommand( "xgui", "removeAdvert", node.group, node.number, type( node.group ) )
 			else --Remove an advert group
 				RunConsoleCommand( "xgui", "removeAdvertGroup", node.group, type( node.group ) )
 			end
 			adverts.tree:SetSelectedItem( nil )
-		end, "Cancel", function() end )
+		end, "取消", function() end )
 	end
 end
 function adverts.RenameAdvert( old )
@@ -313,7 +313,7 @@ function adverts.updateAdverts()
 	adverts.hasGroups = false
 	adverts.tree:Clear()
 	adverts.group:Clear()
-	adverts.group:AddChoice( "<无组>" )
+	adverts.group:AddChoice( "<No Group>" )
 	adverts.group:ChooseOptionID( 1 )
 
 	local sortGroups = {}
@@ -390,7 +390,7 @@ adverts.updateAdverts() -- For autorefresh
 xgui.hookEvent( "adverts", "process", adverts.updateAdverts, "serverUpdateAdverts" )
 xgui.addSubModule( "ULX 广告", adverts, nil, "server" )
 
----------------------------封禁信息---------------------------
+---------------------------Ban Message---------------------------
 xgui.prepareDataType( "banmessage" )
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
 plist:Add( xlib.makelabel{ label="向被封禁的用户显示的消息", zpos=1 } )
@@ -408,9 +408,9 @@ plist.btnPreview.DoClick = function()
 end
 xgui.handleBanPreview = function( message )
 	local preview = xlib.makeframe{ w=380, h=200 }
-	local message = xlib.makelabel{ x=20, y=35, label=message, textcolor=Color( 191, 191, 191, 255 ), font="默认大", parent=preview }
+	local message = xlib.makelabel{ x=20, y=35, label=message, textcolor=Color( 191, 191, 191, 255 ), font="DefaultLarge", parent=preview }
 	message:SizeToContents()
-	local close = xlib.makebutton{ x=288, y=message:GetTall()+42, w=72, h=24, label="关闭", font="默认大", parent=preview }
+	local close = xlib.makebutton{ x=288, y=message:GetTall()+42, w=72, h=24, label="Close", font="DefaultLarge", parent=preview }
 	close.DoClick = function()
 		preview:Remove()
 	end
@@ -452,7 +452,7 @@ xgui.hookEvent( "banmessage", "process", plist.updateBanMessage, "serverUpdateBa
 
 xgui.addSubModule( "ULX 封禁信息", plist, nil, "server" )
 
-------------------------------回声-------------------------------
+------------------------------Echo-------------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
 plist:Add( xlib.makelabel{ label="命令/事件回显设置" } )
 plist:Add( xlib.makecheckbox{ label="Echo 玩家投票选择", repconvar="ulx_voteEcho" } )
@@ -475,7 +475,7 @@ plist:Add( xlib.makelabel{ label="其他一切的颜色" } )
 plist:Add( xlib.makecolorpicker{ repconvar="ulx_logEchoColorMisc", noalphamodetwo=true } )
 xgui.addSubModule( "ULX 命令/事件回声", plist, nil, "server" )
 
-------------------------通用设置-------------------------
+------------------------General Settings-------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
 plist:Add( xlib.makelabel{ label="常规 ULX 设置" } )
 plist:Add( xlib.makeslider{ label="聊天垃圾时间", min=0, max=5, decimal=1, repconvar="ulx_chattime" } )
@@ -509,14 +509,14 @@ gimps.textbox.OnGetFocus = function( self )
 end
 gimps.button = xlib.makebutton{ x=225, w=50, label="添加", parent=gimps }
 gimps.button.DoClick = function( self )
-	if self:GetValue() == "添加" then
+	if self:GetValue() == "Add" then
 		gimps.textbox:OnEnter()
 	elseif gimps.list:GetSelectedLine() then
 		RunConsoleCommand( "xgui", "removeGimp", gimps.list:GetSelected()[1]:GetColumnText(1) )
 	end
 end
 gimps.list = xlib.makelistview{ y=20, w=275, h=302, multiselect=false, headerheight=0, parent=gimps }
-gimps.list:AddColumn( "Gimp 谚语" )
+gimps.list:AddColumn( "Gimp Sayings" )
 gimps.list.OnRowSelected = function( self, LineID, Line )
 	gimps.button:SetText( "消除" )
 end
@@ -530,7 +530,7 @@ gimps.updateGimps()
 xgui.hookEvent( "gimps", "process", gimps.updateGimps, "serverUpdateGimps" )
 xgui.addSubModule( "ULX 瞎搞", gimps, nil, "server" )
 
-------------------------踢/封禁原因-------------------------
+------------------------Kick/Ban Reasons-------------------------
 xgui.prepareDataType( "banreasons", ulx.common_kick_reasons )
 local panel = xlib.makepanel{ parent=xgui.null }
 panel.textbox = xlib.maketextbox{ w=225, h=20, parent=panel, selectall=true }
@@ -568,7 +568,7 @@ panel.updateBanReasons()
 xgui.hookEvent( "banreasons", "process", panel.updateBanReasons, "serverUpdateBanReasons" )
 xgui.addSubModule( "ULX 踢/封禁原因", panel, "xgui_managebans", "server" )
 
---------------------------日志设置---------------------------
+--------------------------Log Settings---------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
 plist:Add( xlib.makelabel{ label="日志设置" } )
 plist:Add( xlib.makecheckbox{ label="启用记录到文件", repconvar="ulx_logFile" } )
@@ -589,13 +589,13 @@ hook.Add( "ULibReplicatedCvarChanged", "XGUI_ulx_logDir", logdirbutton.ConVarUpd
 plist:Add( logdirbutton )
 xgui.addSubModule( "ULX 日志", plist, nil, "server" )
 
-------------------------------公告-------------------------------
+------------------------------Motd-------------------------------
 xgui.prepareDataType( "motdsettings" )
 local motdpnl = xlib.makepanel{ w=275, h=322, parent=xgui.null }
 local plist = xlib.makelistlayout{ w=275, h=298, parent=motdpnl }
 
-local fontWeights = { "普通的", "大", "100", "200", "300", "400", "500", "600", "700", "800", "900", "lighter", "bolder" }
-local commonFonts = { "宋体", "宋体黑", "口径", "坎德拉", "坎布里亚", "康索拉斯", "快递新", "弗拉克林哥特中号", "Futura", "Georgia", "Helvetica", "Impact", "Lucida Console", "Segoe UI", "Tahoma", "Times New Roman", "Trebuchet MS", "Verdana" }
+local fontWeights = { "normal", "bold", "100", "200", "300", "400", "500", "600", "700", "800", "900", "lighter", "bolder" }
+local commonFonts = { "Arial", "Arial Black", "Calibri", "Candara", "Cambria", "Consolas", "Courier New", "Fraklin Gothic Medium", "Futura", "Georgia", "Helvetica", "Impact", "Lucida Console", "Segoe UI", "Tahoma", "Times New Roman", "Trebuchet MS", "Verdana" }
 
 
 plist:Add( xlib.makelabel{ label="MOTD模式:", zpos=0 } )
@@ -726,7 +726,7 @@ local function performMOTDInfoUpdate( data, setting )
 end
 
 
--- MOTD 生成器用户界面
+-- MOTD Generator UI
 plist.generator = xlib.makelistlayout{ w=255, h=250, zpos=6 }
 plist:Add( plist.generator )
 plist.generator:SetVisible( false )
@@ -749,43 +749,43 @@ btnAddSection.DoClick = function()
 	menu:AddOption( "文字内容", function()
 		local info = xgui.data.motdsettings.info
 		table.insert( info, {
-			type="文本",
-			title="关于本服务器",
-			contents={"在此处输入服务器描述!"}
+			type="text",
+			title="About This Server",
+			contents={"Enter server description here!"}
 		})
-		performMOTDInfoUpdate( info[#info], "信息["..#info.."]" )
+		performMOTDInfoUpdate( info[#info], "info["..#info.."]" )
 	end )
 	menu:AddOption( "项目符号列表", function()
 		local info = xgui.data.motdsettings.info
 		table.insert( info, {
-			type="列表",
-			title="示例列表",
-			contents={"每个换行符都成为它自己的要点.", "您可以根据需要添加任意数量!"}
+			type="list",
+			title="Example List",
+			contents={"Each newline becomes its own bullet point.", "You can add as many as you need!"}
 		})
-		performMOTDInfoUpdate( info[#info], "信息["..#info.."]" )
+		performMOTDInfoUpdate( info[#info], "info["..#info.."]" )
 	end )
 	menu:AddOption( "编号列表", function()
 		local info = xgui.data.motdsettings.info
 		table.insert( info, {
-			type="有序列表",
-			title="示例编号列表",
-			contents={"每个换行符都成为它自己的编号项目.", "您可以根据需要添加任意数量!"}
+			type="ordered_list",
+			title="Example Numbered List",
+			contents={"Each newline becomes its own numbered item.", "You can add as many as you need!"}
 		})
 		performMOTDInfoUpdate( info[#info], "info["..#info.."]" )
 	end )
 	menu:AddOption( "已安装的插件", function()
 		local info = xgui.data.motdsettings.info
 		table.insert( info, {
-			type="模组",
-			title="已安装的插件"
+			type="mods",
+			title="Installed Addons"
 		})
 		performMOTDInfoUpdate( info[#info], "info["..#info.."]" )
 	end )
 	menu:AddOption( "列出组中的用户", function()
 		local info = xgui.data.motdsettings.info
 		table.insert( info, {
-			type="管理员",
-			title="我们的管理员",
+			type="admins",
+			title="Our Admins",
 			contents={"superadmin", "admin"}
 		})
 		performMOTDInfoUpdate( info[#info], "info["..#info.."]" )
@@ -847,7 +847,7 @@ plist.generator:Add( pnlColorHeader )
 plist.generator:Add( xlib.makelabel{ label="部分标题文本颜色" } )
 local pnlColorSection = xlib.makecolorpicker{ noalphamodetwo=true }
 plist.generator:Add( pnlColorSection )
-plist.generator:Add( xlib.makelabel{ label="Default Text Color" } )
+plist.generator:Add( xlib.makelabel{ label="默认文本颜色" } )
 local pnlColorText = xlib.makecolorpicker{ noalphamodetwo=true }
 plist.generator:Add( pnlColorText )
 
@@ -905,7 +905,7 @@ plist.updateGeneratorSettings = function( data )
 		local sectionPanel = xlib.makelistlayout{ w=270 }
 
 		if section.type == "text" then
-			sectionPanel:Add( xlib.makelabel{ label="\n"..i..": Text Content", zpos=0 } )
+			sectionPanel:Add( xlib.makelabel{ label="\n"..i..": 文字内容", zpos=0 } )
 
 			local sectionTitle = xlib.maketextbox{ zpos=1 }
 			registerMOTDChangeEventsTextbox( sectionTitle, "info["..i.."].title" )
@@ -931,7 +931,7 @@ plist.updateGeneratorSettings = function( data )
 			sectionPanel:Add( sectionOrderedList )
 
 		elseif section.type == "list" then
-			sectionPanel:Add( xlib.makelabel{ label="\n"..i..": Bulleted List" } )
+			sectionPanel:Add( xlib.makelabel{ label="\n"..i..": 项目符号列表" } )
 
 			local sectionTitle = xlib.maketextbox{ zpos=1 }
 			registerMOTDChangeEventsTextbox( sectionTitle, "info["..i.."].title" )
@@ -944,7 +944,7 @@ plist.updateGeneratorSettings = function( data )
 			sectionPanel:Add( sectionList )
 
 		elseif section.type == "mods" then
-			sectionPanel:Add( xlib.makelabel{ label="\n"..i..": Installed Addons" } )
+			sectionPanel:Add( xlib.makelabel{ label="\n"..i..": 已安装的插件" } )
 
 			local modsTitle = xlib.maketextbox{ zpos=1 }
 			registerMOTDChangeEventsTextbox( modsTitle, "info["..i.."].title" )
@@ -952,7 +952,7 @@ plist.updateGeneratorSettings = function( data )
 			sectionPanel:Add( modsTitle )
 
 		elseif section.type == "admins" then
-			sectionPanel:Add( xlib.makelabel{ label="\n"..i..": List Users in Group" } )
+			sectionPanel:Add( xlib.makelabel{ label="\n"..i..": 列出组中的用户" } )
 
 			local adminsTitle = xlib.maketextbox{ zpos=1 }
 			registerMOTDChangeEventsTextbox( adminsTitle, "info["..i.."].title" )
@@ -963,7 +963,7 @@ plist.updateGeneratorSettings = function( data )
 				local group = section.contents[j]
 				local adminPnl = xlib.makepanel{ h=20, w=270, zpos=i+j }
 				xlib.makelabel{ h=20, w=200, label=group, parent=adminPnl }
-				local adminBtn = xlib.makebutton{ x=204, w=50, label="Remove", parent=adminPnl }
+				local adminBtn = xlib.makebutton{ x=204, w=50, label="移除", parent=adminPnl }
 				adminBtn.DoClick = function()
 					table.remove( section.contents, j )
 					performMOTDInfoUpdate( section.contents, "info["..i.."].contents" )
@@ -972,7 +972,7 @@ plist.updateGeneratorSettings = function( data )
 			end
 
 			local adminAddPnl = xlib.makepanel{ h=20, w=270, zpos=99 }
-			local adminBtn = xlib.makebutton{ w=100, label="Add Group...", parent=adminAddPnl }
+			local adminBtn = xlib.makebutton{ w=100, label="添加组...", parent=adminAddPnl }
 			adminBtn.DoClick = function()
 				local menu = DermaMenu()
 				menu:SetSkin(xgui.settings.skin)
@@ -994,12 +994,12 @@ plist.updateGeneratorSettings = function( data )
 		local actionPnl = xlib.makepanel{ w=270, h=20, zpos=100 }
 		local btnRemove = xlib.makebutton{ w=100, label="删除部分", parent=actionPnl }
 		btnRemove.DoClick = function()
-			Derma_Query( "您确定要删除该部分吗 \"" .. section.title .. "\"?", "XGUI 警告",
-				"Remove",	function()
+			Derma_Query( "您确定要删除该部分吗 \"" .. section.title .. "\"?", "XGUI WARNING",
+				"移除",	function()
 								table.remove( data.info, i )
 								performMOTDInfoUpdate( data.info, "info" )
 							end,
-				"Cancel", 	function() end )
+				"取消", 	function() end )
 		end
 		local btnUp = xlib.makebutton{ x=214, w=20, icon="icon16/bullet_arrow_up.png", centericon=true, disabled=(i==1), parent=actionPnl }
 		btnUp.DoClick = function()
@@ -1091,7 +1091,7 @@ plist.ConVarUpdated( nil, "ulx_showMotd", nil, nil, GetConVar( "ulx_showMotd" ):
 
 xgui.addSubModule( "ULX 公告", motdpnl, "ulx showmotd", "server" )
 
------------------------玩家投票列表-----------------------
+-----------------------Player Votemap List-----------------------
 xgui.prepareDataType( "votemaps", ulx.votemaps )
 local panel = xlib.makepanel{ w=285, h=322, parent=xgui.null }
 xlib.makelabel{ label="允许的投票地图", x=5, y=3, parent=panel }
@@ -1152,7 +1152,7 @@ panel.updateList()
 xgui.hookEvent( "votemaps", "process", panel.updateList, "serverUpdateVotemapList" )
 xgui.addSubModule( "ULX 玩家投票列表", panel, nil, "server" )
 
----------------------玩家投票地图设置---------------------
+---------------------Player Votemap Settings---------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
 plist:Add( xlib.makelabel{ label="玩家投票地图设置" } )
 plist:Add( xlib.makecheckbox{ label="启用玩家投票地图", repconvar="ulx_votemapEnabled" } )
@@ -1168,7 +1168,7 @@ plist:Add( xlib.makelabel{ label="管理员否决地图更改的时间(秒)" } )
 plist:Add( xlib.makeslider{ label="<--->", min=0, max=300, repconvar="ulx_votemapVetotime" } )
 xgui.addSubModule( "ULX 玩家投票地图设置", plist, nil, "server" )
 
--------------------------预留插槽--------------------------
+-------------------------Reserved Slots--------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
 plist:Add( xlib.makelabel{ label="预留插槽设置" } )
 plist:Add( xlib.makecombobox{ repconvar="ulx_rslotsMode", isNumberConvar=true, choices={ "0 - 保留插槽禁用", "1 - 管理员填充插槽", "2 - 管理员不填充插槽", "3 - 管理员踢最新玩家" } } )
@@ -1177,7 +1177,7 @@ plist:Add( xlib.makecheckbox{ label="保留插槽可见", repconvar="ulx_rslotsV
 plist:Add( xlib.makelabel{ w=265, wordwrap=true, label="保留插槽模式信息:\n1 - 设置一定数量的为管理员保留的空位-- 当管理员加入时,他们将填满这些空位.\n2 - 与 #1 相同,但管理员不会填满空位-- 当玩家离开时,他们将被释放.\n3 - 始终为管理员打开 1 个插槽,如果已满,则在管理员加入时以最短的连接时间踢用户,从而保持 1 个插槽打开.\n\n保留插槽可见:\n启用时,如果没有常规玩家服务器中可用的插槽,看起来服务器已满。这样做的主要缺点是管理员无法使用'查找服务器'对话框连接到服务器.相反,他们必须转到控制台并使用命令'connect <ip>'" } )
 xgui.addSubModule( "ULX 预留插槽", plist, nil, "server" )
 
-------------------------投票踢出/投票封禁-------------------------
+------------------------Votekick/Voteban-------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
 plist:Add( xlib.makelabel{ label="投票设置" } )
 plist:Add( xlib.makelabel{ label="接受投票所需的投票率" } )
@@ -1190,3 +1190,4 @@ plist:Add( xlib.makeslider{ label="<--->", min=0, max=1, decimal=2, repconvar="u
 plist:Add( xlib.makelabel{ label="成功投票禁令所需的最低票数" } )
 plist:Add( xlib.makeslider{ label="<--->", min=0, max=10, repconvar="ulx_votebanMinvotes" } )
 xgui.addSubModule( "ULX 投票踢出/投票封禁", plist, nil, "server" )
+

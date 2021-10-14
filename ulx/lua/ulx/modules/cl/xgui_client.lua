@@ -302,39 +302,39 @@ function xgui.checkNotInstalled( tabname )
 
 	gui.EnableScreenClicker( true )
 	RestoreCursorPosition()
-	xgui.notInstalledWarning = xlib.makeframe{ label="XGUI 警告!", w=375, h=110, nopopup=true, showclose=false, skin=xgui.settings.skin }
-	xlib.makelabel{ x=10, y=30, wordwrap=true, w=365, label="XGUI 未与服务器正确初始化.这可能是由于地图更改后服务器负载过重,XGUI 服务器启动期间出现重大错误或未安装 XGUI 造成的.", parent=xgui.notInstalledWarning }
+	xgui.notInstalledWarning = xlib.makeframe{ label="XGUI Warning!", w=375, h=110, nopopup=true, showclose=false, skin=xgui.settings.skin }
+	xlib.makelabel{ x=10, y=30, wordwrap=true, w=365, label="XGUI has not initialized properly with the server. This could be caused by a heavy server load after a mapchange, a major error during XGUI server startup, or XGUI not being installed.", parent=xgui.notInstalledWarning }
 
 	xlib.makebutton{ x=37, y=83, w=80, label="Offline Mode", parent=xgui.notInstalledWarning }.DoClick = function()
 		xgui.notInstalledWarning:Remove()
 		xgui.notInstalledWarning = nil
-		offlineWarning = xlib.makeframe{ label="XGUI 警告!", w=375, h=110, nopopup=true, showclose=false, skin=xgui.settings.skin }
-		xlib.makelabel{ x=10, y=30, wordwrap=true, w=365, label="XGUI 将以离线模式在本地运行.某些功能将无法使用,并且信息将丢失.您可以尝试使用 XGUI 客户端菜单中的'刷新服务器数据'按钮重新连接到服务器.", parent=offlineWarning }
-		xlib.makebutton{ x=77, y=83, w=80, label="好的", parent=offlineWarning }.DoClick = function()
+		offlineWarning = xlib.makeframe{ label="XGUI Warning!", w=375, h=110, nopopup=true, showclose=false, skin=xgui.settings.skin }
+		xlib.makelabel{ x=10, y=30, wordwrap=true, w=365, label="XGUI will run locally in offline mode. Some features will not work, and information will be missing. You can attempt to reconnect to the server using the 'Refresh Server Data' button in the XGUI client menu.", parent=offlineWarning }
+		xlib.makebutton{ x=77, y=83, w=80, label="OK", parent=offlineWarning }.DoClick = function()
 			offlineWarning:Remove()
 			xgui.offlineMode = true
 			xgui.show( tabname )
 		end
-		xlib.makebutton{ x=217, y=83, w=80, label="取消", parent=offlineWarning }.DoClick = function()
+		xlib.makebutton{ x=217, y=83, w=80, label="Cancel", parent=offlineWarning }.DoClick = function()
 			offlineWarning:Remove()
 			RememberCursorPosition()
 			gui.EnableScreenClicker( false )
 		end
 	end
 
-	xlib.makebutton{ x=257, y=83, w=80, label="关闭", parent=xgui.notInstalledWarning }.DoClick = function()
+	xlib.makebutton{ x=257, y=83, w=80, label="Close", parent=xgui.notInstalledWarning }.DoClick = function()
 		xgui.notInstalledWarning:Remove()
 		xgui.notInstalledWarning = nil
 		RememberCursorPosition()
 		gui.EnableScreenClicker( false )
 	end
 
-	xlib.makebutton{ x=147, y=83, w=80, label="再试一次", parent=xgui.notInstalledWarning }.DoClick = function()
+	xlib.makebutton{ x=147, y=83, w=80, label="Try Again", parent=xgui.notInstalledWarning }.DoClick = function()
 		xgui.notInstalledWarning:Remove()
 		xgui.notInstalledWarning = nil
 		RememberCursorPosition()
 		gui.EnableScreenClicker( false )
-		local reattempt = xlib.makeframe{ label="XGUI:尝试重新连接...", w=200, h=20, nopopup=true, showclose=false, skin=xgui.settings.skin }
+		local reattempt = xlib.makeframe{ label="XGUI: Attempting reconnection...", w=200, h=20, nopopup=true, showclose=false, skin=xgui.settings.skin }
 		timer.Simple( 1, function()
 			RunConsoleCommand( "_xgui", "getInstalled" )
 			reattempt:Remove()
@@ -354,14 +354,14 @@ function xgui.show( tabname )
 	end
 
 	if not game.SinglePlayer() and not ULib.ucl.authed[LocalPlayer():UniqueID()] then
-		local unauthedWarning = xlib.makeframe{ label="XGUI 错误!", w=250, h=90, showclose=true, skin=xgui.settings.skin }
-		xlib.makelabel{ label="您的 ULX 播放器尚未通过身份验证!", x=10, y=30, parent=unauthedWarning }
-		xlib.makelabel{ label="请等待几秒钟，然后重试.", x=10, y=45, parent=unauthedWarning }
-		xlib.makebutton{ x=50, y=63, w=60, label="再试一次", parent=unauthedWarning }.DoClick = function()
+		local unauthedWarning = xlib.makeframe{ label="XGUI Error!", w=250, h=90, showclose=true, skin=xgui.settings.skin }
+		xlib.makelabel{ label="Your ULX player has not been Authed!", x=10, y=30, parent=unauthedWarning }
+		xlib.makelabel{ label="Please wait a couple seconds and try again.", x=10, y=45, parent=unauthedWarning }
+		xlib.makebutton{ x=50, y=63, w=60, label="Try Again", parent=unauthedWarning }.DoClick = function()
 			unauthedWarning:Remove()
 			xgui.show( tabname )
 		end
-		xlib.makebutton{ x=140, y=63, w=60, label="关闭", parent=unauthedWarning }.DoClick = function()
+		xlib.makebutton{ x=140, y=63, w=60, label="Close", parent=unauthedWarning }.DoClick = function()
 			unauthedWarning:Remove()
 		end
 		return

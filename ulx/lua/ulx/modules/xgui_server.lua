@@ -72,7 +72,7 @@ function xgui.init()
 		if xgui.cmds[name] then
 			xgui.cmds[name]( ply, args )
 		else
-			ULib.tsay( ply, "XGUI:命令 " .. ( name or "<没有任何>" ) .. " 未能识别!" )
+			ULib.tsay( ply, "XGUI: Command " .. ( name or "<none>" ) .. " not recognized!" )
 		end
 	end
 	concommand.Add( "_xgui", xgui.cmd )
@@ -313,7 +313,7 @@ function xgui.init()
 	--Initialize the server modules!
 	for _, v in ipairs( xgui.svmodules ) do	v.init() end
 
-	ulx.addToHelpManually( "菜单", "xgui", "<显示,隐藏,切换> - 打开和/或关闭 XGUI. (说: !xgui, !menu) (别名: ulx menu)" )
+	ulx.addToHelpManually( "Menus", "xgui", "<show, hide, toggle> - Opens and/or closes XGUI. (say: !xgui, !menu) (alias: ulx menu)" )
 end
 
 --Init the code when the server is ready
@@ -327,7 +327,7 @@ function xgui.postInit()
 	for _, ply in pairs( player.GetAll() ) do
 		for UID, data in pairs( xgui.activeUsers ) do
 			if ply:UniqueID() == UID then
-				ULib.clientRPC( ply, "xgui.getChunk", -1, "初始化..." )
+				ULib.clientRPC( ply, "xgui.getChunk", -1, "Initializing..." )
 			end
 		end
 	end
