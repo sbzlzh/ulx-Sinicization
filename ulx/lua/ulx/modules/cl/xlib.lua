@@ -1,7 +1,7 @@
---XLIB -- 由随波逐流汉化!
---XGUI 使用的辅助函数库，用于通过一行代码创建真皮控件。
+--XLIB -- by Stickly Man!
+--A library of helper functions used by XGUI for creating derma controls with a single line of code.
 
---目前有点杂乱无章和不规范，（只需按照我需要的方式放入东西）。我希望有时间解决这个问题.
+--Currently a bit disorganized and unstandardized, (just put in things as I needed them). I'm hoping to fix that sometime.
 
 xlib = {}
 
@@ -405,14 +405,14 @@ function xlib.makecombobox( t )
 			if tonumber( cvar ) and cvar + t.numOffset <= #pnl.Choices and cvar + t.numOffset > 0 then
 				pnl:ChooseOptionID( cvar + t.numOffset )
 			else
-				pnl:SetText( "无效的 Convar 值" )
+				pnl:SetText( "Invalid Convar Value" )
 			end
 			function pnl.ConVarUpdated( sv_cvar, cl_cvar, ply, old_val, new_val )
 				if cl_cvar == t.repconvar:lower() then
 					if tonumber( new_val ) and new_val + t.numOffset <= #pnl.Choices and new_val + t.numOffset > 0 then
 						pnl:ChooseOptionID( new_val + t.numOffset )
 					else
-						pnl:SetText( "无效的 Convar 值" )
+						pnl:SetText( "Invalid Convar Value" )
 					end
 				end
 			end
@@ -1155,7 +1155,7 @@ xlib.addToAnimQueue = function( obj, ... )
 		xlib.animStep = xlib.animStep + 1
 		table.insert( outTable, function() xlib.animRunning = xlib.animTypes[obj]  xlib.animRunning:Start( ( xlib.curAnimStep ~= -1 and ( length/xlib.curAnimStep ) or 0 ), arg[1] ) end )
 	else
-		Msg( "Error: XLIB recieved an invalid animation call! TYPE:" .. type( obj ) .. " VALUE:" .. tostring( obj ) .. "\n" )
+		Msg( "错误:XLIB 收到无效的动画调用!类型:" .. type( obj ) .. " VALUE:" .. tostring( obj ) .. "\n" )
 	end
 end
 

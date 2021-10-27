@@ -1,5 +1,5 @@
---xgui_helpers -- 由随波逐流汉化!
---一组通用函数来帮助处理各种与 XGUI 相关的事情.
+--xgui_helpers -- by Stickly Man!
+--A set of generic functions to help with various XGUI-related things.
 
 function xgui.load_helpers()
 	--These handle keyboard focus for textboxes within XGUI.
@@ -180,7 +180,7 @@ function xgui.load_helpers()
 				if stack[1] ~= nil then
 					local b, e = pcall( stack[ 1 ].fn, unpack( stack[ 1 ], 1, stack[ 1 ].n ) )
 					if not b then
-						ErrorNoHalt( "XGUI queue error: " .. tostring( e ) .. "\n" )
+						ErrorNoHalt( "XGUI 队列错误: " .. tostring( e ) .. "\n" )
 					end
 				end
 			table.remove( stack, 1 ) -- Remove the first inserted item. This is FIFO
@@ -242,12 +242,12 @@ function xgui.load_helpers()
 
 			local divisor = {}
 			local sensiblemax = {}
-			if min == 0 then outPanel.interval:AddChoice( "永久" ) table.insert( divisor, 1 ) table.insert( sensiblemax, 0 ) end
-			if max >= 1 and min <= 60*24 then outPanel.interval:AddChoice( "分钟" ) table.insert( divisor, 1 ) table.insert( sensiblemax, 60*24 ) end
-			if max >= 60 and min <= 60*24*7 then outPanel.interval:AddChoice( "小时" ) table.insert( divisor, 60 ) table.insert( sensiblemax, 24*7 ) end
-			if max >= ( 60*24 ) and min <= 60*24*120 then outPanel.interval:AddChoice( "天" ) table.insert( divisor, 60*24 ) table.insert( sensiblemax, 120 ) end
-			if max >= ( 60*24*7 ) and min <= 60*24*7*52 then outPanel.interval:AddChoice( "周" ) table.insert( divisor, 60*24*7 ) table.insert( sensiblemax, 52 ) end
-			if max >= ( 60*24*365 ) then outPanel.interval:AddChoice( "年" ) table.insert( divisor, 60*24*365 ) table.insert( sensiblemax, 10 ) end
+			if min == 0 then outPanel.interval:AddChoice( "Permanent" ) table.insert( divisor, 1 ) table.insert( sensiblemax, 0 ) end
+			if max >= 1 and min <= 60*24 then outPanel.interval:AddChoice( "Minutes" ) table.insert( divisor, 1 ) table.insert( sensiblemax, 60*24 ) end
+			if max >= 60 and min <= 60*24*7 then outPanel.interval:AddChoice( "Hours" ) table.insert( divisor, 60 ) table.insert( sensiblemax, 24*7 ) end
+			if max >= ( 60*24 ) and min <= 60*24*120 then outPanel.interval:AddChoice( "Days" ) table.insert( divisor, 60*24 ) table.insert( sensiblemax, 120 ) end
+			if max >= ( 60*24*7 ) and min <= 60*24*7*52 then outPanel.interval:AddChoice( "Weeks" ) table.insert( divisor, 60*24*7 ) table.insert( sensiblemax, 52 ) end
+			if max >= ( 60*24*365 ) then outPanel.interval:AddChoice( "Years" ) table.insert( divisor, 60*24*365 ) table.insert( sensiblemax, 10 ) end
 
 			outPanel.interval.OnSelect = function( self, index, value, data )
 				outPanel.val:SetDisabled( value == "Permanent" )
@@ -332,18 +332,18 @@ function xgui.load_helpers()
 		end
 
 		local charPriority = { "y", "w", "d", "h" }
-		local charMap = { "年", "周", "天", "时" }
+		local charMap = { "Years", "Weeks", "Days", "Hours" }
 		local divisor = { 60 * 24 * 365, 60 * 24 * 7, 60 * 24, 60 }
 		for i, v in ipairs( charPriority ) do
 			if arg:find( v, 1, true ) then
 				if not charMap[ i ] or not divisor [ i ] or not ULib.stringTimeToMinutes( arg ) then return nil, nil end
 				local val = ULib.stringTimeToMinutes( arg ) / divisor[ i ]
-				if val == 0 then return "永久", 0 end
+				if val == 0 then return "Permanent", 0 end
 				return charMap[ i ], val
 			end
 		end
 
-		return "分钟", ULib.stringTimeToMinutes( arg )
+		return "Minutes", ULib.stringTimeToMinutes( arg )
 	end
 
 
