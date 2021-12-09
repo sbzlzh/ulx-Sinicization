@@ -14,9 +14,9 @@ if game.SinglePlayer() then
 	offset = 20
 	xlib.makecheckbox{ x=10, y=115, label="保持 AI 布娃娃", repconvar="rep_ai_keepragdolls", parent=server }
 end
-xlib.makelabel{ x=10, y=120+offset, label="sv_gravity", parent=server }
+xlib.makelabel{ x=10, y=120+offset, label="服务器重力", parent=server }
 xlib.makeslider{ x=10, y=135+offset, label="<--->", w=125, min=-1000, max=1000, repconvar="rep_sv_gravity", parent=server }
-xlib.makelabel{ x=10, y=165+offset, label="phys_timescale", parent=server }
+xlib.makelabel{ x=10, y=165+offset, label="物理枪时间表", parent=server }
 xlib.makeslider{ x=10, y=180+offset, label="<--->", w=125, min=0, max=4, decimal=2, repconvar="rep_phys_timescale", parent=server }
 
 ------------------------ULX Category Menu------------------------

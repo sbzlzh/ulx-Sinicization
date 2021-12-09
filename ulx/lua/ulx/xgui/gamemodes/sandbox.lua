@@ -26,7 +26,7 @@ function sbox_settings.processLimits()
 			local i=0
 			for _, cvar in ipairs( limits ) do
 				local cvardata = string.Explode( " ", cvar ) --Split the cvarname and max slider value number
-				xgui.queueFunctionCall( xlib.makeslider, "sboxlimits", { x=10+(i%2*205), y=5+math.floor(i/2)*25, w=200, label="最大限度 " .. cvardata[1]:sub(9), min=0, max=cvardata[2], repconvar="rep_"..cvardata[1], parent=panel, fixclip=true } )
+				xgui.queueFunctionCall( xlib.makeslider, "sboxlimits", { x=10+(i%2*205), y=5+math.floor(i/2)*25, w=200, label="最大值 " .. cvardata[1]:sub(9), min=0, max=cvardata[2], repconvar="rep_"..cvardata[1], parent=panel, fixclip=true } )
 				i = i + 1
 			end
 			sbox_settings.plist:Add( xlib.makecat{ label=limits.title .. " (" .. #limits .. " 限制" .. ((#limits > 1) and "" or "") .. ")", contents=panel, expanded=( g==1 ) } )
@@ -37,4 +37,3 @@ sbox_settings.processLimits()
 
 xgui.hookEvent( "sboxlimits", "process", sbox_settings.processLimits, "sandboxProcessLimits" )
 xgui.addSettingModule( "沙盒", sbox_settings, "icon16/box.png", "xgui_gmsettings" )
-
