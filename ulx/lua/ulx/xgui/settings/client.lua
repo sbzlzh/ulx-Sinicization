@@ -74,7 +74,7 @@ end
 client.processModules()
 
 xgui.hookEvent( "onProcessModules", nil, client.processModules, "xguiProcessModules" )
-xgui.addSettingModule( "服务器设定", client, "icon16/layout_content.png" )
+xgui.addSettingModule( "客户端设定", client, "icon16/layout_content.png" )
 
 
 --------------------General Clientside Module--------------------
