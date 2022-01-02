@@ -1,4 +1,4 @@
--- 该模块包含任何类型的聊天功能
+-- This module holds any type of chatting functions
 CATEGORY_NAME = "聊天"
 
 ------------------------------ Psay ------------------------------
@@ -18,7 +18,7 @@ psay:help( "向目标发送私信." )
 
 ------------------------------ Asay ------------------------------
 local seeasayAccess = "ulx seeasay"
-if SERVER then ULib.ucl.registerAccess( seeasayAccess, ULib.ACCESS_OPERATOR, "Ability to see 'ulx asay'", "Other" ) end -- Give operators access to see asays echoes by default
+if SERVER then ULib.ucl.registerAccess( seeasayAccess, ULib.ACCESS_OPERATOR, "能够看到'ulx asay'", "Other" ) end -- Give operators access to see asays echoes by default
 
 function ulx.asay( calling_ply, message )
 	local format
@@ -27,7 +27,7 @@ function ulx.asay( calling_ply, message )
 		format = "(管理) *** #P #s"
 		message = message:sub( me:len() + 1 )
 	else
-		format = "#P 发送到管理: #s"
+		format = "#P 到： #s"
 	end
 
 	local players = player.GetAll()
@@ -81,11 +81,11 @@ function ulx.thetime( calling_ply )
 	end
 
 	lasttimeusage = CurTime()
-	ulx.fancyLog( "现在时间是 #s.", os.date( "%I:%M %p") )
+	ulx.fancyLog( "现在时间是: #s.", os.date( "%I:%M %p") )
 end
 local thetime = ulx.command( CATEGORY_NAME, "ulx thetime", ulx.thetime, "!thetime" )
 thetime:defaultAccess( ULib.ACCESS_ALL )
-thetime:help( "显示服务器时间." )
+thetime:help( "在服务器上显示当前时间." )
 
 
 ------------------------------ Adverts ------------------------------
@@ -177,16 +177,16 @@ function ulx.gimp( calling_ply, target_plys, should_ungimp )
 	end
 
 	if not should_ungimp then
-		ulx.fancyLogAdmin( calling_ply, "#A 瞎搞 #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A gimped #T", target_plys )
 	else
-		ulx.fancyLogAdmin( calling_ply, "#A 解除瞎搞 #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A ungimped #T", target_plys )
 	end
 end
 local gimp = ulx.command( CATEGORY_NAME, "ulx gimp", ulx.gimp, "!gimp" )
 gimp:addParam{ type=ULib.cmds.PlayersArg }
 gimp:addParam{ type=ULib.cmds.BoolArg, invisible=true }
 gimp:defaultAccess( ULib.ACCESS_ADMIN )
-gimp:help( "Gimps 目标,因此他们无法正常聊天." )
+gimp:help( "Gimps target(s) so they are unable to chat normally." )
 gimp:setOpposite( "ulx ungimp", {_, _, true}, "!ungimp" )
 
 ------------------------------ Mute ------------------------------
@@ -202,16 +202,16 @@ function ulx.mute( calling_ply, target_plys, should_unmute )
 	end
 
 	if not should_unmute then
-		ulx.fancyLogAdmin( calling_ply, "#A 静音 #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A 禁言 #T", target_plys )
 	else
-		ulx.fancyLogAdmin( calling_ply, "#A 取消静音 #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A 取消禁言 #T", target_plys )
 	end
 end
 local mute = ulx.command( CATEGORY_NAME, "ulx mute", ulx.mute, "!mute" )
 mute:addParam{ type=ULib.cmds.PlayersArg }
 mute:addParam{ type=ULib.cmds.BoolArg, invisible=true }
 mute:defaultAccess( ULib.ACCESS_ADMIN )
-mute:help( "使目标静音，使他们无法聊天." )
+mute:help( "使目标禁言." )
 mute:setOpposite( "ulx unmute", {_, _, true}, "!unmute" )
 
 if SERVER then
@@ -244,7 +244,7 @@ local gag = ulx.command( CATEGORY_NAME, "ulx gag", ulx.gag, "!gag" )
 gag:addParam{ type=ULib.cmds.PlayersArg }
 gag:addParam{ type=ULib.cmds.BoolArg, invisible=true }
 gag:defaultAccess( ULib.ACCESS_ADMIN )
-gag:help( "堵嘴目标,禁用麦克风." )
+gag:help( "对目标禁止语音." )
 gag:setOpposite( "ulx ungag", {_, _, true}, "!ungag" )
 
 local function gagHook( listener, talker )

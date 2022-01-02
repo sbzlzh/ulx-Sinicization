@@ -43,7 +43,7 @@ if ULib.fileExists( "lua/ulx/modules/cl/motdmenu.lua" ) or ulx.motdmenu_exists t
 
 	function ulx.motd( calling_ply )
 		if not calling_ply:IsValid() then
-			Msg( "You can't see the motd from the console.\n" )
+			Msg( "您无法从控制台看到 motd.\n" )
 			return
 		end
 

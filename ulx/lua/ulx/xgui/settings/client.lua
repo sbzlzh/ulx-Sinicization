@@ -52,7 +52,7 @@ function xgui.openClientModule( name )
 	end
 end
 
---流程模块化设置
+--Process modular settings
 function client.processModules()
 	client.catList:Clear()
 	for i, module in ipairs( xgui.modules.submodule ) do
@@ -74,23 +74,23 @@ end
 client.processModules()
 
 xgui.hookEvent( "onProcessModules", nil, client.processModules, "xguiProcessModules" )
-xgui.addSettingModule( "Client", client, "icon16/layout_content.png" )
+xgui.addSettingModule( "服务器设定", client, "icon16/layout_content.png" )
 
 
---------------------通用客户端模块--------------------
+--------------------General Clientside Module--------------------
 local genpnl = xlib.makepanel{ parent=xgui.null }
 
-genpnl.pickupplayers = xlib.makecheckbox{ x=10, y=10, w=150, label="启用使用 physgun 接听玩家(为您自己)", convar="cl_pickupplayers", parent=genpnl }
+genpnl.pickupplayers = xlib.makecheckbox{ x=10, y=10, w=150, label="启用使用physgun接载玩家(为自己)", convar="cl_pickupplayers", parent=genpnl }
 function genpnl.processModules()
 	genpnl.pickupplayers:SetDisabled( not LocalPlayer():query( "ulx physgunplayer" ) )
 end
 
 xgui.hookEvent( "onProcessModules", nil, genpnl.processModules, "clientGeneralProcessModules" )
-xgui.addSubModule( "通用设置", genpnl, nil, "client" )
+xgui.addSubModule( "常规设置", genpnl, nil, "client" )
 
---------------------XGUI 客户端模块--------------------
+--------------------XGUI Clientside Module--------------------
 local xguipnl = xlib.makepanel{ parent=xgui.null }
-xlib.makebutton{ x=10, y=10, w=150, label="刷新 XGUI 模块", parent=xguipnl }.DoClick=function()
+xlib.makebutton{ x=10, y=10, w=150, label="刷新XGUI模块", parent=xguipnl }.DoClick=function()
 	xgui.processModules()
 end
 local databutton = xlib.makebutton{ x=10, y=30, w=150, label="刷新服务器数据", parent=xguipnl }
@@ -123,12 +123,12 @@ xlib.makecolorpicker{ x=10, y=135, color=xgui.settings.infoColor, addalpha=true,
 end
 
 ----------------
---皮肤管理器--
+--SKIN MANAGER--
 ----------------
 xlib.makelabel{ x=10, y=273, label="皮肤主题:", parent=xguipnl }
 xguipnl.skinselect = xlib.makecombobox{ x=10, y=290, w=150, parent=xguipnl }
 if not derma.SkinList[xgui.settings.skin] then
-	xgui.settings.skin = "默认"
+	xgui.settings.skin = "Default"
 end
 xguipnl.skinselect:SetText( derma.SkinList[xgui.settings.skin].PrintName )
 xgui.base.refreshSkin = true
@@ -141,7 +141,7 @@ for skin, skindata in pairs( derma.SkinList ) do
 end
 
 ----------------
---标签排序--
+--TAB ORDERING--
 ----------------
 xguipnl.mainorder = xlib.makelistview{ x=175, y=10, w=115, h=110, parent=xguipnl }
 xguipnl.mainorder:AddColumn( "主要模块" )
@@ -231,9 +231,9 @@ xguipnl.downbtnS.DoClick = function( self )
 end
 
 --------------------
---XGUI 定位--
+--XGUI POSITIONING--
 --------------------
-xlib.makelabel{ x=175, y=145, label="XGUI 定位:", parent=xguipnl }
+xlib.makelabel{ x=175, y=145, label="XGUI定位:", parent=xguipnl }
 local pos = tonumber( xgui.settings.xguipos.pos )
 xguipnl.b7 = xlib.makebutton{ x=175, y=160, w=20, disabled=pos==7, parent=xguipnl }
 xguipnl.b7.DoClick = function( self ) xguipnl.updatePos( 7 ) end
@@ -284,7 +284,7 @@ xguipnl.xwang.OnLoseFocus = function( self )
 	hook.Call( "OnTextEntryLoseFocus", nil, self )
 	self:OnEnter()
 end
-xlib.makelabel{ x=300, y=169, label="X 偏移", parent=xguipnl }
+xlib.makelabel{ x=300, y=169, label="X偏移", parent=xguipnl }
 
 xguipnl.ywang = xlib.makenumberwang{ x=245, y=193, w=50, min=-1000, max=1000, value=xgui.settings.xguipos.yoff, decimal=0, parent=xguipnl }
 xguipnl.ywang.OnValueChanged = function( self, val )
@@ -299,12 +299,12 @@ xguipnl.ywang.OnLoseFocus = function( self )
 	hook.Call( "OnTextEntryLoseFocus", nil, self )
 	self:OnEnter()
 end
-xlib.makelabel{ x=300, y=195, label="Y 偏移", parent=xguipnl }
+xlib.makelabel{ x=300, y=195, label="Y偏移", parent=xguipnl }
 
 -------------------------
---打开/关闭动画--
+--OPEN/CLOSE ANIMATIONS--
 -------------------------
-xlib.makelabel{ x=175, y=229, label="XGUI 动画:", parent=xguipnl }
+xlib.makelabel{ x=175, y=229, label="XGUI动画:", parent=xguipnl }
 xlib.makelabel{ x=175, y=247, label="打开时:", parent=xguipnl }
 xguipnl.inAnim = xlib.makecombobox{ x=225, y=245, w=150, choices={ "淡入","从顶部滑动","从左侧滑动","从底部滑动","从右侧滑动" }, parent=xguipnl }
 xguipnl.inAnim:ChooseOptionID( tonumber( xgui.settings.animIntype ) )
@@ -318,4 +318,4 @@ function xguipnl.outAnim:OnSelect( index, value, data )
 	xgui.settings.animOuttype = index
 end
 
-xgui.addSubModule( "XGUI 设置", xguipnl, nil, "client" )
+xgui.addSubModule( "XGUI设置", xguipnl, nil, "client" )

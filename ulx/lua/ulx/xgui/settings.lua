@@ -33,4 +33,4 @@ if autorefreshTab ~= nil then
 	xgui.settings_tabs:SetActiveTab( autorefreshTab, true )
 end
 
-xgui.addModule( "设置", settings, "icon16/wrench.png" )
+xgui.addModule( "服务器设置", settings, "icon16/wrench.png" )

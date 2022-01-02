@@ -15,7 +15,7 @@ end
 --Set up various hooks modules can "hook" into.
 function xgui.hookEvent( dtype, event, func, name )
 	if not xgui.hook[dtype] or ( event and not xgui.hook[dtype][event] ) then
-		Msg( "XGUI:尝试将无效类型或事件添加到钩子! (" .. dtype .. ", " .. ( event or "nil" ) .. ")\n" )
+		Msg( "XGUI: 试图将无效类型或事件添加到钩子! (" .. dtype .. ", " .. ( event or "nil" ) .. ")\n" )
 	else
 		if not name then name = "FixMe" .. math.floor(math.random()*10000) end -- Backwards compatibility for older XGUI modules
 		if not event then
@@ -302,13 +302,13 @@ function xgui.checkNotInstalled( tabname )
 
 	gui.EnableScreenClicker( true )
 	RestoreCursorPosition()
-	xgui.notInstalledWarning = xlib.makeframe{ label="XGUI 警告!", w=375, h=110, nopopup=true, showclose=false, skin=xgui.settings.skin }
+	xgui.notInstalledWarning = xlib.makeframe{ label="XGUI警告!", w=375, h=110, nopopup=true, showclose=false, skin=xgui.settings.skin }
 	xlib.makelabel{ x=10, y=30, wordwrap=true, w=365, label="XGUI 未与服务器正确初始化.这可能是由于地图更改后服务器负载过重、XGUI 服务器启动期间出现重大错误或未安装 XGUI 造成的.", parent=xgui.notInstalledWarning }
 
 	xlib.makebutton{ x=37, y=83, w=80, label="离线模式", parent=xgui.notInstalledWarning }.DoClick = function()
 		xgui.notInstalledWarning:Remove()
 		xgui.notInstalledWarning = nil
-		offlineWarning = xlib.makeframe{ label="XGUI 警告!", w=375, h=110, nopopup=true, showclose=false, skin=xgui.settings.skin }
+		offlineWarning = xlib.makeframe{ label="XGUI警告!", w=375, h=110, nopopup=true, showclose=false, skin=xgui.settings.skin }
 		xlib.makelabel{ x=10, y=30, wordwrap=true, w=365, label="XGUI 将以离线模式在本地运行.某些功能将无法使用,并且信息将丢失.您可以尝试使用 XGUI 客户端菜单中的'刷新服务器数据'按钮重新连接到服务器.", parent=offlineWarning }
 		xlib.makebutton{ x=77, y=83, w=80, label="好", parent=offlineWarning }.DoClick = function()
 			offlineWarning:Remove()
@@ -354,8 +354,8 @@ function xgui.show( tabname )
 	end
 
 	if not game.SinglePlayer() and not ULib.ucl.authed[LocalPlayer():UniqueID()] then
-		local unauthedWarning = xlib.makeframe{ label="XGUI 错误!", w=250, h=90, showclose=true, skin=xgui.settings.skin }
-		xlib.makelabel{ label="您的 ULX 播放器尚未通过身份验证!", x=10, y=30, parent=unauthedWarning }
+		local unauthedWarning = xlib.makeframe{ label="XGUI错误!", w=250, h=90, showclose=true, skin=xgui.settings.skin }
+		xlib.makelabel{ label="您的ULX玩家尚未通过身份验证!", x=10, y=30, parent=unauthedWarning }
 		xlib.makelabel{ label="请等待几秒钟,然后重试.", x=10, y=45, parent=unauthedWarning }
 		xlib.makebutton{ x=50, y=63, w=60, label="再试一次", parent=unauthedWarning }.DoClick = function()
 			unauthedWarning:Remove()
@@ -439,7 +439,7 @@ function xgui.expectChunks( numofchunks )
 		xgui.chunkbox.max = numofchunks
 		xgui.chunkbox.value = 0
 		xgui.chunkbox:SetFraction( 0 )
-		xgui.chunkbox.Label:SetText( "获取数据：等待服务器..." )
+		xgui.chunkbox.Label:SetText( "获取数据: 等待服务器..." )
 		xgui.chunkbox:SetVisible( true )
 		xgui.chunkbox:SetSkin( xgui.settings.skin )
 		xgui.flushQueue( "chunkbox" ) --Remove the queue entry that would hide the chunkbox
@@ -508,7 +508,7 @@ end
 function xgui.callUpdate( dtype, event, data )
 	--Run any functions that request to be called when "curtable" is updated
 	if not xgui.hook[dtype] or ( event and not xgui.hook[dtype][event] ) then
-		Msg( "XGUI:尝试将不存在的类型或事件调用到钩子! (" .. dtype .. ", " .. ( event or "nil" ) .. ")\n" )
+		Msg( "XGUI: Attempted to call non-existent type or event to a hook! (" .. dtype .. ", " .. ( event or "nil" ) .. ")\n" )
 	else
 		if not event then
 			for name, func in pairs( xgui.hook[dtype] ) do func( data ) end

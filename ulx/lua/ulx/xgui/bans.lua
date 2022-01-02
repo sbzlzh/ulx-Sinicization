@@ -7,8 +7,8 @@ local xbans = xlib.makepanel{ parent=xgui.null }
 
 xbans.banlist = xlib.makelistview{ x=5, y=30, w=572, h=310, multiselect=false, parent=xbans }
 	xbans.banlist:AddColumn( "名字/SteamID" )
-	xbans.banlist:AddColumn( "被封禁" )
-	xbans.banlist:AddColumn( "解禁日期" )
+	xbans.banlist:AddColumn( "封禁人" )
+	xbans.banlist:AddColumn( "解封日期" )
 	xbans.banlist:AddColumn( "原因" )
 xbans.banlist.DoDoubleClick = function( self, LineID, line )
 	xbans.ShowBanDetailsWindow( xgui.data.bans.cache[LineID] )
@@ -24,7 +24,7 @@ xbans.banlist.OnRowRightClick = function( self, LineID, line )
 		if not line:IsValid() then return end
 		xgui.ShowBanWindow( nil, line:GetValue( 5 ), nil, true, xgui.data.bans.cache[LineID] )
 	end )
-	menu:AddOption( "消除", function()
+	menu:AddOption( "删除 ", function()
 		if not line:IsValid() then return end
 		xbans.RemoveBan( line:GetValue( 5 ), xgui.data.bans.cache[LineID] )
 	end )
@@ -80,30 +80,30 @@ function xbans.sortbox:OnSelect( i, v )
 end
 
 local hidePerma = 0
-xlib.makebutton{ x=355, y=6, w=95, label="永久封禁: 显示", parent=xbans }.DoClick = function( self )
+xlib.makebutton{ x=355, y=6, w=95, label="永久封禁:显示", parent=xbans }.DoClick = function( self )
 	hidePerma = hidePerma + 1
 	if hidePerma == 1 then
-		self:SetText( "永久封禁: 隐藏" )
+		self:SetText( "永久封禁:隐藏" )
 	elseif hidePerma == 2 then
-		self:SetText( "永久封禁: 仅有的" )
+		self:SetText( "永久封禁:仅有的" )
 	elseif hidePerma == 3 then
 		hidePerma = 0
-		self:SetText( "永久封禁: 展示" )
+		self:SetText( "永久封禁:展示" )
 	end
 	xbans.setPage( 1 )
 	xbans.retrieveBans()
 end
 
 local hideIncomplete = 0
-xlib.makebutton{ x=455, y=6, w=95, label="不完整: 展示", parent=xbans, tooltip="过滤由 ULib 加载的禁令,但没有任何与之关联的元数据." }.DoClick = function( self )
+xlib.makebutton{ x=455, y=6, w=95, label="不完整:展示", parent=xbans, tooltip="过滤由ULib加载的禁令,但没有任何与之关联的元数据." }.DoClick = function( self )
 	hideIncomplete = hideIncomplete + 1
 	if hideIncomplete == 1 then
-		self:SetText( "不完整: 隐藏" )
+		self:SetText( "不完整:隐藏" )
 	elseif hideIncomplete == 2 then
-		self:SetText( "不完整: 仅有的" )
+		self:SetText( "不完整:仅有的" )
 	elseif hideIncomplete == 3 then
 		hideIncomplete = 0
-		self:SetText( "不完整: 显示" )
+		self:SetText( "不完整:显示" )
 	end
 	xbans.setPage( 1 )
 	xbans.retrieveBans()
@@ -120,7 +120,7 @@ local function banUserList( doFreeze )
 		end )
 	end
 	menu:AddSpacer()
-	if LocalPlayer():query("ulx banid") then menu:AddOption( "通过STEAMID封禁...", function() xgui.ShowBanWindow() end ) end
+	if LocalPlayer():query("ulx banid") then menu:AddOption( "通过STEAM ID封禁...", function() xgui.ShowBanWindow() end ) end
 	menu:Open()
 end
 
@@ -180,11 +180,11 @@ function xbans.RemoveBan( ID, bandata )
 	local tempstr = "<Unknown>"
 	if bandata then tempstr = bandata.name or "<Unknown>" end
 	Derma_Query( "你确定要解禁吗 " .. tempstr .. " - " .. ID .. "?", "XGUI WARNING",
-		"Remove",	function()
+		"移除",	function()
 						RunConsoleCommand( "ulx", "unban", ID )
 						xbans.RemoveBanDetailsWindow( ID )
 					end,
-		"Cancel", 	function() end )
+		"取消", 	function() end )
 end
 
 xbans.openWindows = {}
@@ -367,11 +367,11 @@ function xgui.ShowBanWindow( ply, ID, doFreeze, isUpdate, bandata )
 			if btime ~= 0 and bandata and btime * 60 + bandata.time < os.time() then
 				Derma_Query( "警告!您指定的新禁令时间将导致此禁令失效.\n成功更改禁令长度所需的最短时间是 "
 						.. xgui.ConvertTime( os.time() - bandata.time ) .. ".\n您确定要继续吗?", "XGUI WARNING",
-					"Expire Ban", function()
+					"到期封禁 ", function()
 						performUpdate(btime)
 						xbans.RemoveBanDetailsWindow( bandata.steamID )
 					end,
-					"Cancel", function() end )
+					"取消", function() end )
 			else
 				performUpdate(btime)
 			end
@@ -424,9 +424,9 @@ function xgui.ConvertTime( seconds )
 	local minutes = math.floor( seconds/60 )
 	seconds = seconds - ( minutes * 60 )
 	local curtime = ""
-	if years ~= 0 then curtime = curtime .. years .. " year" .. ( ( years > 1 ) and "s, " or ", " ) end
-	if weeks ~= 0 then curtime = curtime .. weeks .. " week" .. ( ( weeks > 1 ) and "s, " or ", " ) end
-	if days ~= 0 then curtime = curtime .. days .. " day" .. ( ( days > 1 ) and "s, " or ", " ) end
+	if years ~= 0 then curtime = curtime .. years .. " 年" .. ( ( years > 1 ) and "s, " or ", " ) end
+	if weeks ~= 0 then curtime = curtime .. weeks .. " 周" .. ( ( weeks > 1 ) and "s, " or ", " ) end
+	if days ~= 0 then curtime = curtime .. days .. " 天" .. ( ( days > 1 ) and "s, " or ", " ) end
 	curtime = curtime .. ( ( hours < 10 ) and "0" or "" ) .. hours .. ":"
 	curtime = curtime .. ( ( minutes < 10 ) and "0" or "" ) .. minutes .. ":"
 	return curtime .. ( ( seconds < 10 and "0" or "" ) .. seconds )
@@ -520,4 +520,4 @@ function xbans.UCLChanged()
 end
 hook.Add( "UCLChanged", "xgui_RefreshBansMenu", xbans.UCLChanged )
 
-xgui.addModule( "封禁", xbans, "icon16/exclamation.png", "xgui_managebans" )
+xgui.addModule( "封禁管理", xbans, "icon16/exclamation.png", "xgui_managebans" )

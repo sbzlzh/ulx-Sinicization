@@ -26,18 +26,18 @@ maps.disp:SetPos( 185, 30 )
 maps.disp:SetMaterial( Material( "maps/thumb/noicon.png" ) )
 maps.disp:SetSize( 192, 192 )
 
-maps.gamemode = xlib.makecombobox{ x=70, y=340, w=110, h=20, text="<default>", parent=maps }
+maps.gamemode = xlib.makecombobox{ x=70, y=340, w=110, h=20, text="<默认>", parent=maps }
 
 maps.vote = xlib.makebutton{ x=185, y=245, w=192, h=20, label="投票玩这张地图!", parent=maps }
 maps.vote.DoClick = function()
-	if maps.curmap:GetValue() ~= "No Map Selected" then
+	if maps.curmap:GetValue() ~= "未选择地图" then
 		RunConsoleCommand( "ulx", "votemap", maps.curmap:GetValue() )
 	end
 end
 
 maps.svote = xlib.makebutton{ x=185, y=270, w=192, h=20, label="所选地图的全服务器投票", parent=maps }
 maps.svote.DoClick = function()
-	if maps.curmap:GetValue() ~= "No Map Selected" then
+	if maps.curmap:GetValue() ~= "无地图选择" then
 		local votemaps = {}
 		for k, v in ipairs( maps.list:GetSelected() ) do
 			table.insert( votemaps, maps.list:GetSelected()[k]:GetColumnText(1))
@@ -46,13 +46,13 @@ maps.svote.DoClick = function()
 	end
 end
 
-maps.changemap = xlib.makebutton{ x=185, y=295, w=192, h=20, disabled=true, label="强制更改此地图的级别", parent=maps }
+maps.changemap = xlib.makebutton{ x=185, y=295, w=192, h=20, disabled=true, label="强制更改级别为此地图", parent=maps }
 maps.changemap.DoClick = function()
-	if maps.curmap:GetValue() ~= "No Map Selected" then
+	if maps.curmap:GetValue() ~= "无地图选择" then
 		Derma_Query( "您确定要将级别更改为 \"" .. maps.curmap:GetValue() .. "\"?", "XGUI 警告",
-		"Change Level", function()
-			RunConsoleCommand( "ulx", "map", maps.curmap:GetValue(), ( maps.gamemode:GetValue() ~= "<default>" ) and maps.gamemode:GetValue() or nil ) end,
-		"Cancel", function() end )
+		"更改级别", function()
+			RunConsoleCommand( "ulx", "map", maps.curmap:GetValue(), ( maps.gamemode:GetValue() ~= "<默认>" ) and maps.gamemode:GetValue() or nil ) end,
+		"取消", function() end )
 	end
 end
 
@@ -61,7 +61,7 @@ maps.vetomap.DoClick = function()
 	RunConsoleCommand( "ulx", "veto" )
 end
 
-maps.nextLevelLabel = xlib.makelabel{ x=382, y=13, label="下一级 (cvar)", parent=maps }
+maps.nextLevelLabel = xlib.makelabel{ x=382, y=13, label="下一级(cvar)", parent=maps }
 maps.nextlevel = xlib.makecombobox{ x=382, y=30, w=180, h=20, repconvar="rep_nextlevel", convarblanklabel="<not specified>", parent=maps }
 
 function maps.addMaptoList( mapname, lastselected )

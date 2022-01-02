@@ -6,7 +6,6 @@ function bans.init()
 	ULib.ucl.registerAccess( "xgui_managebans", "superadmin", "Allows addition, removal, and viewing of bans in XGUI.", "XGUI" )
 
 	xgui.addDataType( "bans", function() return { count=table.Count( ULib.bans ) } end, "xgui_managebans", 30, 20 )
-
 	--Chat commands
 	local function xgui_banWindowChat( ply, func, args, doFreeze )
 		if doFreeze ~= true then doFreeze = false end
@@ -294,4 +293,4 @@ function bans.postinit()
 	bans.unbanTimer()
 end
 
-xgui.addSVModule( "封禁", bans.init, bans.postinit )
+xgui.addSVModule( "bans", bans.init, bans.postinit )

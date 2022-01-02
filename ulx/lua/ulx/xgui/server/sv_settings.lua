@@ -267,7 +267,7 @@ function settings.init()
 				new_file = new_file .. map .. "\n"
 			end
 		else
-			Msg( "XGUI: 无法保存投票地图 - 无效或不存在 ulx_votemapMapmode cvar!\n" )
+			Msg( "XGUI: Could not save votemaps- Invalid or nonexistent ulx_votemapMapmode cvar!\n" )
 			return
 		end
 

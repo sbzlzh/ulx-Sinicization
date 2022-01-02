@@ -72,7 +72,7 @@ local function advertiseNewVersions( ply )
 			end
 		end
 		if #updatesFor > 0 then
-			ULib.tsay( ply, "[ULX] 更新可用于 " .. string.Implode( ", ", updatesFor ) )
+			ULib.tsay( ply, "[ULX] Updates available for " .. string.Implode( ", ", updatesFor ) )
 		end
 		ply.ULX_UpdatesAdvertised = true
 	end

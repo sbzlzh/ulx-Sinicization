@@ -37,7 +37,7 @@ function ulx.luaRun( calling_ply, command )
 		end
 	end
 
-	ulx.fancyLogAdmin( calling_ply, true, "#A 运行 lua: #s", command )
+	ulx.fancyLogAdmin( calling_ply, true, "#A 运行了: #s", command )
 end
 local luarun = ulx.command( CATEGORY_NAME, "ulx luarun", ulx.luaRun, nil, false, false, true )
 luarun:addParam{ type=ULib.cmds.StringArg, hint="命令", ULib.cmds.takeRestOfLine }
@@ -57,7 +57,7 @@ end
 local exec = ulx.command( CATEGORY_NAME, "ulx exec", ulx.exec, nil, false, false, true )
 exec:addParam{ type=ULib.cmds.StringArg, hint="文件" }
 exec:defaultAccess( ULib.ACCESS_SUPERADMIN )
-exec:help( "执行服务器上cfg目录下的文件." )
+exec:help( "让服务器执行cfg文件" )
 
 function ulx.cexec( calling_ply, target_plys, command )
 	for _, v in ipairs( target_plys ) do
@@ -108,13 +108,13 @@ function ulx.ent( calling_ply, classname, params )
 	undo.Finish()
 
 	if not params or params == "" then
-		ulx.fancyLogAdmin( calling_ply, "#A 创建了 ent #s", classname )
+		ulx.fancyLogAdmin( calling_ply, "#A 创建了一个实体： #s", classname )
 	else
-		ulx.fancyLogAdmin( calling_ply, "#A 用参数 #s 创建了 ent #s", classname, params )
+		ulx.fancyLogAdmin( calling_ply, "#A 创建了一个实体： #s ，额外代码 #s", classname, params )
 	end
 end
-local ent = ulx.command( CATEGORY_NAME, "ulx ent", ulx.ent, nil, false, false, true )
+local ent = ulx.command( CATEGORY_NAME, "ulx ent", ulx.ent )
 ent:addParam{ type=ULib.cmds.StringArg, hint="种类名" }
-ent:addParam{ type=ULib.cmds.StringArg, hint="<标志> : <值> |", ULib.cmds.takeRestOfLine, ULib.cmds.optional }
+ent:addParam{ type=ULib.cmds.StringArg, hint="<flag>:<数值>", ULib.cmds.takeRestOfLine, ULib.cmds.optional }
 ent:defaultAccess( ULib.ACCESS_SUPERADMIN )
-ent:help( "生成一个 ent，用 ':' 分隔标志和值，标志：值对 '|'." )
+ent:help( "创建一个实体， separate flag and value with ':'。" )

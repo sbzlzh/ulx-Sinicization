@@ -52,8 +52,8 @@ cmds.plist.DoDoubleClick = function()
 	cmds.runCmd( cmds.selcmd )
 end
 cmds.plist:SetVisible( false )
-cmds.plist:AddColumn( "Name" )
-cmds.plist:AddColumn( "Group" )
+cmds.plist:AddColumn( "名字" )
+cmds.plist:AddColumn( "组级" )
 
 cmds.cmds = xlib.makelistlayout{ x=5, y=30, w=150, h=330, parent=cmds, padding=1, spacing=1 }
 cmds.setselected = function( selcat, LineID )
@@ -181,7 +181,7 @@ function cmds.buildArgsList( cmd )
 						panel.argnum = argnum
 						panel.xguiIgnore = true
 						panel.arg = curitem
-						panel.addbutton = xlib.makebutton{ label="添加", w=83, parent=panel }
+						panel.addbutton = xlib.makebutton{ label="Add", w=83, parent=panel }
 						panel.addbutton.DoClick = function( self )
 							local parent = self:GetParent()
 							local ctrl = parent.arg.type.x_getcontrol( parent.arg, parent.argnum, cmds.argslist )
@@ -192,7 +192,7 @@ function cmds.buildArgsList( cmd )
 							panel.removebutton:SetDisabled( false )
 							if parent.arg.repeat_max and #choices >= parent.arg.repeat_max then self:SetDisabled( true ) end
 						end
-						panel.removebutton = xlib.makebutton{ label="消除", x=83, w=82, disabled=true, parent=panel }
+						panel.removebutton = xlib.makebutton{ label="Remove", x=83, w=82, disabled=true, parent=panel }
 						panel.removebutton.DoClick = function( self )
 							local parent = self:GetParent()
 							local ctrl = choices[#choices]
@@ -395,4 +395,4 @@ end
 cmds.refresh()
 hook.Add( "UCLChanged", "xgui_RefreshPlayerCmds", cmds.refresh )
 hook.Add( "ULibPlayerNameChanged", "xgui_plyUpdateCmds", cmds.playerNameChanged )
-xgui.addModule( "命令", cmds, "icon16/user_gray.png" )
+xgui.addModule( "指令", cmds, "icon16/user_gray.png" )

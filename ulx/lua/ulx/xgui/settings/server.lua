@@ -1,5 +1,5 @@
---Server settings module for ULX GUI -- by Stickly Man!
---A settings module for modifying server and ULX based settings. Also has the base code for loading the server settings modules.
+--Server settings module for GUI -- by Stickly Man!
+--A settings module for modifying server and based settings. Also has the base code for loading the server settings modules.
 
 local server = xlib.makepanel{ parent=xgui.null }
 
@@ -19,7 +19,7 @@ xlib.makeslider{ x=10, y=135+offset, label="<--->", w=125, min=-1000, max=1000, 
 xlib.makelabel{ x=10, y=165+offset, label="物理枪时间表", parent=server }
 xlib.makeslider{ x=10, y=180+offset, label="<--->", w=125, min=0, max=4, decimal=2, repconvar="rep_phys_timescale", parent=server }
 
-------------------------ULX Category Menu------------------------
+------------------------Category Menu------------------------
 server.mask = xlib.makepanel{ x=295, y=5, w=290, h=322, parent=server }
 server.panel = xlib.makepanel{ x=5, w=285, h=322, parent=server.mask }
 
@@ -98,7 +98,7 @@ end
 server.processModules()
 
 xgui.hookEvent( "onProcessModules", nil, server.processModules, "serverSettingsProcessModules" )
-xgui.addSettingModule( "Server", server, "icon16/server.png", "xgui_svsettings" )
+xgui.addSettingModule( "服务器设定 ", server, "icon16/server.png", "xgui_svsettings" )
 
 
 ---------------------------
@@ -113,7 +113,7 @@ plist:Add( xlib.makelabel{ label="接受地图更改所需的投票率" } )
 plist:Add( xlib.makeslider{ label="<--->", min=0, max=1, decimal=2, repconvar="ulx_votemap2Successratio" } )
 plist:Add( xlib.makelabel{ label="成功更改地图的最低投票数" } )
 plist:Add( xlib.makeslider{ label="<--->", min=0, max=10, repconvar="ulx_votemap2Minvotes" } )
-xgui.addSubModule( "ULX 管理员投票地图", plist, nil, "server" )
+xgui.addSubModule( "管理员投票地图", plist, nil, "server" )
 
 -----------------------------Adverts-----------------------------
 xgui.prepareDataType( "adverts" )
@@ -388,7 +388,7 @@ function adverts.onOpen()
 end
 adverts.updateAdverts() -- For autorefresh
 xgui.hookEvent( "adverts", "process", adverts.updateAdverts, "serverUpdateAdverts" )
-xgui.addSubModule( "ULX 广告", adverts, nil, "server" )
+xgui.addSubModule( "广告", adverts, nil, "server" )
 
 ---------------------------Ban Message---------------------------
 xgui.prepareDataType( "banmessage" )
@@ -450,7 +450,7 @@ end
 plist.updateBanMessage()
 xgui.hookEvent( "banmessage", "process", plist.updateBanMessage, "serverUpdateBanMessage" )
 
-xgui.addSubModule( "ULX 封禁信息", plist, nil, "server" )
+xgui.addSubModule( "封禁信息", plist, nil, "server" )
 
 ------------------------------Echo-------------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
@@ -473,11 +473,11 @@ plist:Add( xlib.makelabel{ label="玩家的颜色(当上面被禁用时)" } )
 plist:Add( xlib.makecolorpicker{ repconvar="ulx_logEchoColorPlayer", noalphamodetwo=true } )
 plist:Add( xlib.makelabel{ label="其他一切的颜色" } )
 plist:Add( xlib.makecolorpicker{ repconvar="ulx_logEchoColorMisc", noalphamodetwo=true } )
-xgui.addSubModule( "ULX 命令/事件回声", plist, nil, "server" )
+xgui.addSubModule( "命令/事件回声", plist, nil, "server" )
 
 ------------------------General Settings-------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
-plist:Add( xlib.makelabel{ label="常规 ULX 设置" } )
+plist:Add( xlib.makelabel{ label="常规 设置" } )
 plist:Add( xlib.makeslider{ label="聊天垃圾时间", min=0, max=5, decimal=1, repconvar="ulx_chattime" } )
 plist:Add( xlib.makelabel{ label="\n允许 '/我' 聊天功能" } )
 plist:Add( xlib.makecombobox{ repconvar="ulx_meChatEnabled", isNumberConvar=true, choices={ "已禁用", "仅限沙盒", "启用" } } )
@@ -490,7 +490,7 @@ plist:Add( xlib.makeslider{ label="<--->", min=0, max=10, decimal=0, repconvar="
 plist:Add( xlib.makeslider{ label="冷却时间(秒)", min=0, max=600, decimal=0, repconvar="ulx_kickAfterNameChangesCooldown" } )
 plist:Add( xlib.makecheckbox{ label="警告玩家还有多少更名", repconvar="ulx_kickAfterNameChangesWarning" } )
 
-xgui.addSubModule( "ULX 通用设置", plist, nil, "server" )
+xgui.addSubModule( "通用设置", plist, nil, "server" )
 
 ------------------------------Gimps------------------------------
 xgui.prepareDataType( "gimps" )
@@ -528,7 +528,7 @@ gimps.updateGimps = function()
 end
 gimps.updateGimps()
 xgui.hookEvent( "gimps", "process", gimps.updateGimps, "serverUpdateGimps" )
-xgui.addSubModule( "ULX 瞎搞", gimps, nil, "server" )
+xgui.addSubModule( "瘸子", gimps, nil, "server" )
 
 ------------------------Kick/Ban Reasons-------------------------
 xgui.prepareDataType( "banreasons", ulx.common_kick_reasons )
@@ -566,7 +566,7 @@ panel.updateBanReasons = function()
 end
 panel.updateBanReasons()
 xgui.hookEvent( "banreasons", "process", panel.updateBanReasons, "serverUpdateBanReasons" )
-xgui.addSubModule( "ULX 踢/封禁原因", panel, "xgui_managebans", "server" )
+xgui.addSubModule( "踢/封禁原因", panel, "xgui_managebans", "server" )
 
 --------------------------Log Settings---------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
@@ -587,7 +587,7 @@ function logdirbutton.ConVarUpdated( sv_cvar, cl_cvar, ply, old_val, new_val )
 end
 hook.Add( "ULibReplicatedCvarChanged", "XGUI_ulx_logDir", logdirbutton.ConVarUpdated )
 plist:Add( logdirbutton )
-xgui.addSubModule( "ULX 日志", plist, nil, "server" )
+xgui.addSubModule( "日志", plist, nil, "server" )
 
 ------------------------------Motd-------------------------------
 xgui.prepareDataType( "motdsettings" )
@@ -1089,7 +1089,7 @@ hook.Add( "ULibReplicatedCvarChanged", "XGUI_ulx_showMotd", plist.ConVarUpdated 
 xlib.checkRepCvarCreated( "ulx_showMotd" )
 plist.ConVarUpdated( nil, "ulx_showMotd", nil, nil, GetConVar( "ulx_showMotd" ):GetString() )
 
-xgui.addSubModule( "ULX 公告", motdpnl, "ulx showmotd", "server" )
+xgui.addSubModule( "公告", motdpnl, "showmotd", "server" )
 
 -----------------------Player Votemap List-----------------------
 xgui.prepareDataType( "votemaps", ulx.votemaps )
@@ -1150,7 +1150,7 @@ panel.updateList = function()
 end
 panel.updateList()
 xgui.hookEvent( "votemaps", "process", panel.updateList, "serverUpdateVotemapList" )
-xgui.addSubModule( "ULX 玩家投票列表", panel, nil, "server" )
+xgui.addSubModule( "玩家投票列表", panel, nil, "server" )
 
 ---------------------Player Votemap Settings---------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
@@ -1166,7 +1166,7 @@ plist:Add( xlib.makelabel{ label="成功更改地图的最低投票数" } )
 plist:Add( xlib.makeslider{ label="<--->", min=0, max=10, repconvar="ulx_votemapMinvotes" } )
 plist:Add( xlib.makelabel{ label="管理员否决地图更改的时间(秒)" } )
 plist:Add( xlib.makeslider{ label="<--->", min=0, max=300, repconvar="ulx_votemapVetotime" } )
-xgui.addSubModule( "ULX 玩家投票地图设置", plist, nil, "server" )
+xgui.addSubModule( "玩家投票地图设置", plist, nil, "server" )
 
 -------------------------Reserved Slots--------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
@@ -1175,7 +1175,7 @@ plist:Add( xlib.makecombobox{ repconvar="ulx_rslotsMode", isNumberConvar=true, c
 plist:Add( xlib.makeslider{ label="预留槽位数", min=0, max=game.MaxPlayers(), repconvar="ulx_rslots" } )
 plist:Add( xlib.makecheckbox{ label="保留插槽可见", repconvar="ulx_rslotsVisible" } )
 plist:Add( xlib.makelabel{ w=265, wordwrap=true, label="保留插槽模式信息:\n1 - 设置一定数量的为管理员保留的空位-- 当管理员加入时,他们将填满这些空位.\n2 - 与 #1 相同,但管理员不会填满空位-- 当玩家离开时,他们将被释放.\n3 - 始终为管理员打开 1 个插槽,如果已满,则在管理员加入时以最短的连接时间踢用户,从而保持 1 个插槽打开.\n\n保留插槽可见:\n启用时,如果没有常规玩家服务器中可用的插槽,看起来服务器已满。这样做的主要缺点是管理员无法使用'查找服务器'对话框连接到服务器.相反,他们必须转到控制台并使用命令'connect <ip>'" } )
-xgui.addSubModule( "ULX 预留插槽", plist, nil, "server" )
+xgui.addSubModule( "预留插槽", plist, nil, "server" )
 
 ------------------------Votekick/Voteban-------------------------
 local plist = xlib.makelistlayout{ w=275, h=322, parent=xgui.null }
@@ -1189,5 +1189,5 @@ plist:Add( xlib.makelabel{ label="接受投票禁令所需的投票率" } )
 plist:Add( xlib.makeslider{ label="<--->", min=0, max=1, decimal=2, repconvar="ulx_votebanSuccessratio" } )
 plist:Add( xlib.makelabel{ label="成功投票禁令所需的最低票数" } )
 plist:Add( xlib.makeslider{ label="<--->", min=0, max=10, repconvar="ulx_votebanMinvotes" } )
-xgui.addSubModule( "ULX 投票踢出/投票封禁", plist, nil, "server" )
+xgui.addSubModule( "投票踢出/投票封禁", plist, nil, "server" )
 

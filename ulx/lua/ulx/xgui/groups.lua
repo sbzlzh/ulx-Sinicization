@@ -11,13 +11,13 @@ local groups = xlib.makepanel{ parent=xgui.null }
 groups.list = xlib.makecombobox{ x=5, y=5, w=175, parent=groups }
 function groups.list:populate()
 	local prev_sel = self:GetValue()
-	if prev_sel == "" then prev_sel = "Select a group..." end
+	if prev_sel == "" then prev_sel = "选择一个组..." end
 	self:Clear()
 	for _, v in ipairs( xgui.data.groups ) do
 		self:AddChoice( v )
 	end
 	self:AddChoice( "--*" )
-	self:AddChoice( "Manage Groups..." )
+	self:AddChoice( "管理组..." )
 	self:SetText( groups.lastOpenGroup or prev_sel )
 	if groups.lastOpenGroup then
 		if not ULib.ucl.groups[groups.lastOpenGroup] then --Group no longer exists
@@ -30,7 +30,7 @@ function groups.list:populate()
 	end
 end
 groups.list.OnSelect = function( self, index, value, data )
-	if value ~= "Manage Groups..." then
+	if value ~= "管理组..." then
 		if value ~= groups.lastOpenGroup then
 			groups.lastOpenGroup = value
 			groups.pnlG1:Open( value )
@@ -101,10 +101,10 @@ groups.aplayer.DoClick = function()
 		end
 	end
 	menu:AddSpacer()
-	menu:AddOption( "通过 SteamID 添加...", function() groups.addBySteamID( groups.list:GetValue() ) end )
+	menu:AddOption( "通过SteamID添加...", function() groups.addBySteamID( groups.list:GetValue() ) end )
 	menu:Open()
 end
-groups.cplayer = xlib.makebutton{ x=85, y=210, w=80, label="改变...", disabled=true, parent=groups.pnlG1 }
+groups.cplayer = xlib.makebutton{ x=85, y=210, w=80, label="更改...", disabled=true, parent=groups.pnlG1 }
 groups.cplayer.DoClick = function()
 	if groups.players:GetSelectedLine() then
 		local ID = groups.players:GetSelected()[1]:GetColumnText(2)
@@ -120,7 +120,7 @@ groups.cplayer.DoClick = function()
 		menu:Open()
 	end
 end
-xlib.makelabel{ x=5, y=240, label="Team:", parent=groups.pnlG1}
+xlib.makelabel{ x=5, y=240, label="团队:", parent=groups.pnlG1}
 groups.teams = xlib.makecombobox{ x=5, y=255, w=160, disabled=not ulx.uteamEnabled(), parent=groups.pnlG1 }
 groups.teams.OnSelect = function( self, index, value, data )
 	if value == "<None>" then value = "" end
@@ -150,8 +150,8 @@ groups.accessbutton.DoClick = function( self )
 end
 
 function groups.addBySteamID( group )
-	local frame = xlib.makeframe{ label="将 ID 添加到组 " .. group, w=190, h=60, skin=xgui.settings.skin }
-	xlib.maketextbox{ x=5, y=30, w=180, parent=frame, selectall=true, text="进入STEAMID..." }.OnEnter = function( self )
+	local frame = xlib.makeframe{ label="将ID添加到组 " .. group, w=190, h=60, skin=xgui.settings.skin }
+	xlib.maketextbox{ x=5, y=30, w=180, parent=frame, selectall=true, text="输入STEAMID..." }.OnEnter = function( self )
 		if ULib.isValidSteamID( self:GetValue() ) then
 			RunConsoleCommand( "ulx", "adduserid", self:GetValue(), group )
 			frame:Remove()
@@ -200,7 +200,7 @@ function groups.pnlG2:Close()
 	self:closeAnim()
 end
 groups.glist = xlib.makelistview{ x=5, y=5, h=170, w=130, headerheight=0, parent=groups.pnlG2 }
-groups.glist:AddColumn( "组" )
+groups.glist:AddColumn( "Groups" )
 groups.glist.populate = function( self )
 	local previous_group = nil
 	local prev_inherit = groups.ginherit:GetValue()
@@ -217,8 +217,8 @@ groups.glist.populate = function( self )
 		end
 	end
 	if previous_group and previous_group ~= true then --Old group not found, reset the values
-		groups.gname:SetText( "新组" )
-		groups.ginherit:SetText( "用户" )
+		groups.gname:SetText( "new_group" )
+		groups.ginherit:SetText( "user" )
 		groups.gcantarget:SetText( "" )
 		groups.glist:ClearSelection()
 		groups.gdelete:SetDisabled( true )
@@ -231,7 +231,7 @@ end
 groups.glist.OnRowSelected = function( self, LineID, Line )
 	local group = Line:GetColumnText(1)
 	groups.gname:SetText( group )
-	groups.ginherit:SetText( ULib.ucl.groups[group].inherit_from or "用户" )
+	groups.ginherit:SetText( ULib.ucl.groups[group].inherit_from or "user" )
 	groups.gcantarget:SetText( ULib.ucl.groups[group].can_target or "*" )
 	groups.gupdate:SetDisabled( false )
 
@@ -293,19 +293,19 @@ groups.gupdate.DoClick = function( self )
 		ULib.queueFunctionCall( RunConsoleCommand, "ulx", "setgroupcantarget", groupname, groups.gcantarget:GetValue() )
 	end
 end
-groups.gdelete = xlib.makebutton{ x=5, y=175, w=130, label="Delete", disabled=true, parent=groups.pnlG2 }
+groups.gdelete = xlib.makebutton{ x=5, y=175, w=130, label="删除", disabled=true, parent=groups.pnlG2 }
 groups.gdelete.DoClick = function()
 	local group = groups.gname:GetValue()
 	if group == "superadmin" or group == "admin" then
-		Derma_Query( "Removing the " .. group .. " group is generally a bad idea, and it could break some plugins. Are you sure?", "XGUI WARNING",
-			"Remove", function()
+		Derma_Query( "删除 " .. group .. " 组通常是一个坏主意,它可能会破坏一些插件.你确定吗?", "XGUI警告",
+			"移除", function()
 				RunConsoleCommand( "ulx", "removegroup", group ) end,
-			"Cancel", function() end )
+			"取消", function() end )
 	else
-		Derma_Query( "Are you sure you would like to remove the \"" .. group .. "\" group?", "XGUI WARNING",
-			"Remove", function()
+		Derma_Query( "您确定要删除 \"" .. group .. "\" 组?", "XGUI警告",
+			"移除", function()
 				RunConsoleCommand( "ulx", "removegroup", group ) end,
-			"Cancel", function() end )
+			"取消", function() end )
 	end
 end
 
@@ -325,7 +325,7 @@ function groups.pnlG3:Close()
 	self:closeAnim()
 end
 groups.teamlist = xlib.makelistview{ x=5, y=5, w=100, h=155, headerheight=0, parent=groups.pnlG3 }
-groups.teamlist:AddColumn( "团队" )
+groups.teamlist:AddColumn( "队伍" )
 groups.teamlist.OnRowSelected = function( self, LineID, Line )
 	local team = Line:GetColumnText(1)
 	groups.teamdelete:SetDisabled( false )
@@ -373,12 +373,12 @@ xlib.makebutton{ x=5, y=160, w=80, label="创建新的", parent=groups.pnlG3 }.D
 	local teamname, number = checkNewTeamExists( "New_Team", "" )
 	RunConsoleCommand( "xgui", "createTeam", teamname..number, 255, 255, 255 )
 end
-groups.teamdelete = xlib.makebutton{ x=5, y=180, w=80, label="Delete", disabled=true, parent=groups.pnlG3 }
+groups.teamdelete = xlib.makebutton{ x=5, y=180, w=80, label="删除", disabled=true, parent=groups.pnlG3 }
 groups.teamdelete.DoClick = function()
 	local team = groups.teamlist:GetSelected()[1]:GetColumnText(1)
-	Derma_Query( "Are you sure you would like to remove the \"" .. team .. "\" team?", "XGUI WARNING",
-		"Remove", function() RunConsoleCommand( "xgui", "removeTeam", team ) end,
-		"Cancel", function() end )
+	Derma_Query( "您确定要删除 \"" .. team .. "\" 队伍?", "XGUI警告",
+		"移除", function() RunConsoleCommand( "xgui", "removeTeam", team ) end,
+		"取消 ", function() end )
 end
 groups.upbtn = xlib.makebutton{ x=85, y=160, w=20, icon="icon16/bullet_arrow_up.png", centericon=true, disabled=true, parent=groups.pnlG3 }
 groups.upbtn.DoClick = function( self )
@@ -400,7 +400,7 @@ groups.teammodifiers:AddColumn( "Value" ).DoClick = function() end
 groups.teammodifiers.OnRowSelected = function( self, LineID, Line )
 	groups.teammodremove:SetDisabled( Line:GetColumnText(1) == "name" or Line:GetColumnText(1) == "color" )
 	groups.teammodspace:Clear()
-	local applybtn = xlib.makebutton{ label="Apply", parent=groups.teammodspace }
+	local applybtn = xlib.makebutton{ label="应用", parent=groups.teammodspace }
 	if Line:GetColumnText(3) ~= "number" then
 		if Line:GetColumnText(1) == "name" then
 			groups.teamctrl = xlib.maketextbox{ selectall=true, text=Line:GetColumnText(2), parent=groups.teammodspace }
@@ -487,7 +487,7 @@ xgui.allowedTeamModifiers = {
 	unDuckSpeed = { 0.2, 0, 10, 2 },
 	walkSpeed = { 250, 1, nil } }
 
-groups.teammodadd = xlib.makebutton{ x=110, y=180, w=75, label="Add..", disabled=true, parent=groups.pnlG3 }
+groups.teammodadd = xlib.makebutton{ x=110, y=180, w=75, label="添加..", disabled=true, parent=groups.pnlG3 }
 groups.teammodadd.DoClick = function()
 	local team = groups.teamlist:GetSelected()[1]:GetColumnText(1)
 	local teamdata
@@ -517,7 +517,7 @@ groups.teammodadd.DoClick = function()
 	end
 	menu:Open()
 end
-groups.teammodremove = xlib.makebutton{ x=185, y=180, w=75, label="Remove", disabled=true, parent=groups.pnlG3 }
+groups.teammodremove = xlib.makebutton{ x=185, y=180, w=75, label="移除", disabled=true, parent=groups.pnlG3 }
 groups.teammodremove.DoClick = function()
 	local team = groups.teamlist:GetSelected()[1]:GetColumnText(1)
 	local modifier = groups.teammodifiers:GetSelected()[1]:GetColumnText(1)
@@ -821,7 +821,7 @@ function groups.populateRestrictionArgs( cmd, accessStr )
 			RunConsoleCommand( "ulx", "groupallow", groups.access_lines[cmd]:GetColumnText(4), cmd, groups.generateAccessString() )
 		end
 		groups.applyButton:SetText( "应用访问+限制" )
-		groups.applyInheritedButton:SetText( "Apply restrictions at \"" .. groups.access_lines[cmd]:GetColumnText(4) .. "\" level" )
+		groups.applyInheritedButton:SetText( "应用限制在 \"" .. groups.access_lines[cmd]:GetColumnText(4) .. "\" level" )
 		groups.rArgList:Add( groups.applyInheritedButton )
 	end
 	groups.rArgList:SetSkin( xgui.settings.skin )  -- For some reason, skin doesn't update properly when this panel is recreated
@@ -1276,4 +1276,4 @@ xgui.hookEvent( "users", "remove", groups.playerRemoved, "groupsPlayerRemoved" )
 xgui.hookEvent( "teams", "process", groups.updateTeams, "groupsUpdateTeams" )
 xgui.hookEvent( "accesses", "process", groups.updateAccessPanel, "groupsUpdateAccesses" )
 xgui.hookEvent( "playermodels", "process", groups.updateModelPanel, "groupsUpdateModels" )
-xgui.addModule( "组", groups, "icon16/group_gear.png", "xgui_managegroups" )
+xgui.addModule( "权限组", groups, "icon16/group_gear.png", "xgui_managegroups" )

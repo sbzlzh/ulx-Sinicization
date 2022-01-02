@@ -1155,7 +1155,7 @@ xlib.addToAnimQueue = function( obj, ... )
 		xlib.animStep = xlib.animStep + 1
 		table.insert( outTable, function() xlib.animRunning = xlib.animTypes[obj]  xlib.animRunning:Start( ( xlib.curAnimStep ~= -1 and ( length/xlib.curAnimStep ) or 0 ), arg[1] ) end )
 	else
-		Msg( "错误:XLIB 收到无效的动画调用!类型:" .. type( obj ) .. " VALUE:" .. tostring( obj ) .. "\n" )
+		Msg( "Error: XLIB recieved an invalid animation call! TYPE:" .. type( obj ) .. " VALUE:" .. tostring( obj ) .. "\n" )
 	end
 end
 

@@ -94,7 +94,7 @@ function cvarChanged( sv_cvar, cl_cvar, ply, old_value, new_value )
 	sv_cvar = ulx.cvars[ command ].original -- Make sure we have intended casing
 	local path = "data/ulx/config.txt"
 	if not ULib.fileExists( path ) then
-		Msg( "[ULX 错误] 配置不存在于 " .. path .. "\n" )
+		Msg( "[ULX ERROR] Config doesn't exist at " .. path .. "\n" )
 		return
 	end
 

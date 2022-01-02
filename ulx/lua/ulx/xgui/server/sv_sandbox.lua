@@ -21,7 +21,7 @@ local function init()
 		if ULib.isSandbox() then
 			local curgroup
 			local f = ULib.fileRead( "data/ulx/sbox_limits.txt" )
-			if f == nil then Msg( "XGUI 错误:需要沙盒 Cvar 限制文件但找不到!\n" ) return end
+			if f == nil then Msg( "XGUI错误:需要沙盒 Cvar 限制文件但找不到!\n" ) return end
 			local lines = string.Explode( "\n", f )
 			for i,v in ipairs( lines ) do
 				if v:sub( 1,1 ) ~= ";" then
