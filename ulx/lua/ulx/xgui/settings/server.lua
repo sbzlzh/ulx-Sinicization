@@ -1089,7 +1089,7 @@ hook.Add( "ULibReplicatedCvarChanged", "XGUI_ulx_showMotd", plist.ConVarUpdated 
 xlib.checkRepCvarCreated( "ulx_showMotd" )
 plist.ConVarUpdated( nil, "ulx_showMotd", nil, nil, GetConVar( "ulx_showMotd" ):GetString() )
 
-xgui.addSubModule( "公告", motdpnl, "showmotd", "server" )
+xgui.addSubModule( "公告", motdpnl, "ulx showmotd", "server" )
 
 -----------------------Player Votemap List-----------------------
 xgui.prepareDataType( "votemaps", ulx.votemaps )
