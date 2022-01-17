@@ -181,7 +181,7 @@ function cmds.buildArgsList( cmd )
 						panel.argnum = argnum
 						panel.xguiIgnore = true
 						panel.arg = curitem
-						panel.addbutton = xlib.makebutton{ label="Add", w=83, parent=panel }
+						panel.addbutton = xlib.makebutton{ label="添加", w=83, parent=panel }
 						panel.addbutton.DoClick = function( self )
 							local parent = self:GetParent()
 							local ctrl = parent.arg.type.x_getcontrol( parent.arg, parent.argnum, cmds.argslist )
@@ -192,7 +192,7 @@ function cmds.buildArgsList( cmd )
 							panel.removebutton:SetDisabled( false )
 							if parent.arg.repeat_max and #choices >= parent.arg.repeat_max then self:SetDisabled( true ) end
 						end
-						panel.removebutton = xlib.makebutton{ label="Remove", x=83, w=82, disabled=true, parent=panel }
+						panel.removebutton = xlib.makebutton{ label="移除", x=83, w=82, disabled=true, parent=panel }
 						panel.removebutton.DoClick = function( self )
 							local parent = self:GetParent()
 							local ctrl = choices[#choices]

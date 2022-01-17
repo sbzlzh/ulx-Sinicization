@@ -150,7 +150,7 @@ function ulx.ignite( calling_ply, target_plys, seconds, should_extinguish )
 end
 local ignite = ulx.command( CATEGORY_NAME, "ulx ignite", ulx.ignite, "!ignite" )
 ignite:addParam{ type=ULib.cmds.PlayersArg }
-ignite:addParam{ type=ULib.cmds.NumArg, min=1, max=300, default=300, hint="seconds", ULib.cmds.optional, ULib.cmds.round }
+ignite:addParam{ type=ULib.cmds.NumArg, min=1, max=300, default=300, hint="秒", ULib.cmds.optional, ULib.cmds.round }
 ignite:addParam{ type=ULib.cmds.BoolArg, invisible=true }
 ignite:defaultAccess( ULib.ACCESS_ADMIN )
 ignite:help( "点燃目标." )

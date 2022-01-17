@@ -236,18 +236,18 @@ function xgui.load_helpers()
 			local max = restrictions.max or 10 * 60 * 24 * 365 --default slider max 10 years
 
 			local outPanel = xlib.makepanel{ h=40, parent=parent }
-			xlib.makelabel{ x=5, y=3, label="Ban Length:", parent=outPanel }
+			xlib.makelabel{ x=5, y=3, label="时间:", parent=outPanel }
 			outPanel.interval = xlib.makecombobox{ x=90, w=75, parent=outPanel }
 			outPanel.val = xlib.makeslider{ w=165, y=20, label="<--->", min=min, max=max, value=min, decimal=0, parent=outPanel }
 
 			local divisor = {}
 			local sensiblemax = {}
-			if min == 0 then outPanel.interval:AddChoice( "Permanent" ) table.insert( divisor, 1 ) table.insert( sensiblemax, 0 ) end
-			if max >= 1 and min <= 60*24 then outPanel.interval:AddChoice( "Minutes" ) table.insert( divisor, 1 ) table.insert( sensiblemax, 60*24 ) end
-			if max >= 60 and min <= 60*24*7 then outPanel.interval:AddChoice( "Hours" ) table.insert( divisor, 60 ) table.insert( sensiblemax, 24*7 ) end
-			if max >= ( 60*24 ) and min <= 60*24*120 then outPanel.interval:AddChoice( "Days" ) table.insert( divisor, 60*24 ) table.insert( sensiblemax, 120 ) end
-			if max >= ( 60*24*7 ) and min <= 60*24*7*52 then outPanel.interval:AddChoice( "Weeks" ) table.insert( divisor, 60*24*7 ) table.insert( sensiblemax, 52 ) end
-			if max >= ( 60*24*365 ) then outPanel.interval:AddChoice( "Years" ) table.insert( divisor, 60*24*365 ) table.insert( sensiblemax, 10 ) end
+			if min == 0 then outPanel.interval:AddChoice( "永久" ) table.insert( divisor, 1 ) table.insert( sensiblemax, 0 ) end
+			if max >= 1 and min <= 60*24 then outPanel.interval:AddChoice( "分钟" ) table.insert( divisor, 1 ) table.insert( sensiblemax, 60*24 ) end
+			if max >= 60 and min <= 60*24*7 then outPanel.interval:AddChoice( "小时" ) table.insert( divisor, 60 ) table.insert( sensiblemax, 24*7 ) end
+			if max >= ( 60*24 ) and min <= 60*24*120 then outPanel.interval:AddChoice( "天" ) table.insert( divisor, 60*24 ) table.insert( sensiblemax, 120 ) end
+			if max >= ( 60*24*7 ) and min <= 60*24*7*52 then outPanel.interval:AddChoice( "周" ) table.insert( divisor, 60*24*7 ) table.insert( sensiblemax, 52 ) end
+			if max >= ( 60*24*365 ) then outPanel.interval:AddChoice( "年" ) table.insert( divisor, 60*24*365 ) table.insert( sensiblemax, 10 ) end
 
 			outPanel.interval.OnSelect = function( self, index, value, data )
 				outPanel.val:SetDisabled( value == "Permanent" )
