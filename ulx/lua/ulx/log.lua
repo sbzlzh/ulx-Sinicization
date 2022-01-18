@@ -64,7 +64,7 @@ function ulx.logUserAct( ply, target, action, hide_echo )
 		if not ply:IsConnected() or not target:IsConnected() then return end
 		nick = ply:Nick()
 	else
-		nick = "(Console)"
+		nick = "(控制台)"
 	end
 
 	action = action:gsub( "#T", target:Nick(), 1 ) -- Everything needs this replacement
@@ -77,7 +77,7 @@ function ulx.logUserAct( ply, target, action, hide_echo )
 			ULib.tsay( _, echo, true )
 		end
 	elseif level > 0 then
-		local echo = action:gsub( "#A", "(SILENT)" .. nick, 1 )
+		local echo = action:gsub( "#A", "(静默消息)" .. nick, 1 )
 		ULib.tsay( ply, echo, true ) -- Whether or not the originating player has access, they're getting the echo.
 
 		local players = player.GetAll()
@@ -103,7 +103,7 @@ function ulx.logServAct( ply, action, hide_echo )
 		if not ply:IsConnected() then return end
 		nick = ply:Nick()
 	else
-		nick = "(Console)"
+		nick = "(控制台)"
 	end
 
 	local level = logEcho:GetInt()
@@ -115,7 +115,7 @@ function ulx.logServAct( ply, action, hide_echo )
 			ULib.tsay( _, echo, true )
 		end
 	elseif level > 0 then
-		local echo = action:gsub( "#A", "(SILENT)" .. nick, 1 )
+		local echo = action:gsub( "#A", "(静默消息)" .. nick, 1 )
 		ULib.tsay( ply, echo, true ) -- Whether or not the originating player has access, they're getting the echo.
 
 		local players = player.GetAll()
@@ -354,13 +354,13 @@ local function makePlayerList( calling_ply, target_list, showing_ply, use_self_s
 	local anonymous = showing_ply ~= "CONSOLE" and not ULib.ucl.query( showing_ply, seeanonymousechoAccess ) and logEcho:GetInt() == 1
 
 	if #players > 1 and #target_list == #players then
-		return { everyone_color, "Everyone" }
+		return { everyone_color, "每个人" }
 	elseif is_admin_part then
 		local target = target_list[ 1 ] -- Only one target here
 		if anonymous and target ~= showing_ply then
-			return { everyone_color, "(Someone)" }
+			return { everyone_color, "(匿名)" }
 		elseif not target:IsValid() then
-			return { console_color, "(Console)" }
+			return { console_color, "(控制台)" }
 		end
 	end
 
@@ -380,14 +380,14 @@ local function makePlayerList( calling_ply, target_list, showing_ply, use_self_s
 		table.insert( strs, plyColor( target, showing_ply ) )
 		if target == showing_ply then
 			if not use_self_suffix or calling_ply ~= showing_ply then
-				table.insert( strs, "You" )
+				table.insert( strs, "你" )
 			else
-				table.insert( strs, "Yourself" )
+				table.insert( strs, "你自己" )
 			end
 		elseif not use_self_suffix or calling_ply ~= target_list[ i ] or anonymous then
-			table.insert( strs, target_list[ i ]:IsValid() and target_list[ i ]:Nick() or "(Console)" )
+			table.insert( strs, target_list[ i ]:IsValid() and target_list[ i ]:Nick() or "(控制台)" )
 		else
-			table.insert( strs, "Themself" )
+			table.insert( strs, "自我" )
 		end
 		table.insert( strs, default_color )
 		table.insert( strs, "," )
@@ -443,7 +443,7 @@ function ulx.fancyLogAdmin( calling_ply, format, ... )
 
 	if hide_echo then
 		insertToAll( playerStrs, default_color )
-		insertToAll( playerStrs, "(SILENT) " )
+		insertToAll( playerStrs, "(静默消息) " )
 	end
 
 	local no_targets = false

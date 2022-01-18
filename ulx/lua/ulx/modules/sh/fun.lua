@@ -37,7 +37,7 @@ function ulx.whip( calling_ply, target_plys, times, dmg )
 		else
 			local dtime = 0
 			v.whipped = true
-			v.whippedby = calling_ply:IsValid() and calling_ply:Nick() or "(Console)"
+			v.whippedby = calling_ply:IsValid() and calling_ply:Nick() or "(控制台)"
 			v.whipcount = 0
 			v.whipamt = times
 
