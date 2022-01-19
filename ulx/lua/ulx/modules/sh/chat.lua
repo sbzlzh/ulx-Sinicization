@@ -177,16 +177,16 @@ function ulx.gimp( calling_ply, target_plys, should_ungimp )
 	end
 
 	if not should_ungimp then
-		ulx.fancyLogAdmin( calling_ply, "#A gimped #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A 恶搞 #T", target_plys )
 	else
-		ulx.fancyLogAdmin( calling_ply, "#A ungimped #T", target_plys )
+		ulx.fancyLogAdmin( calling_ply, "#A 取消恶搞 #T", target_plys )
 	end
 end
 local gimp = ulx.command( CATEGORY_NAME, "ulx gimp", ulx.gimp, "!gimp" )
 gimp:addParam{ type=ULib.cmds.PlayersArg }
 gimp:addParam{ type=ULib.cmds.BoolArg, invisible=true }
 gimp:defaultAccess( ULib.ACCESS_ADMIN )
-gimp:help( "Gimps target(s) so they are unable to chat normally." )
+gimp:help( "恶搞目标语音,因此他们无法正常聊天." )
 gimp:setOpposite( "ulx ungimp", {_, _, true}, "!ungimp" )
 
 ------------------------------ Mute ------------------------------
