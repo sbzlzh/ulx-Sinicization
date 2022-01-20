@@ -64,7 +64,7 @@ function ulx.logUserAct( ply, target, action, hide_echo )
 		if not ply:IsConnected() or not target:IsConnected() then return end
 		nick = ply:Nick()
 	else
-		nick = "(控制台)"
+		nick = "(Console)"
 	end
 
 	action = action:gsub( "#T", target:Nick(), 1 ) -- Everything needs this replacement
@@ -77,7 +77,7 @@ function ulx.logUserAct( ply, target, action, hide_echo )
 			ULib.tsay( _, echo, true )
 		end
 	elseif level > 0 then
-		local echo = action:gsub( "#A", "(静默消息)" .. nick, 1 )
+		local echo = action:gsub( "#A", "(SILENT)" .. nick, 1 )
 		ULib.tsay( ply, echo, true ) -- Whether or not the originating player has access, they're getting the echo.
 
 		local players = player.GetAll()
@@ -103,7 +103,7 @@ function ulx.logServAct( ply, action, hide_echo )
 		if not ply:IsConnected() then return end
 		nick = ply:Nick()
 	else
-		nick = "(控制台)"
+		nick = "(Console)"
 	end
 
 	local level = logEcho:GetInt()
@@ -115,7 +115,7 @@ function ulx.logServAct( ply, action, hide_echo )
 			ULib.tsay( _, echo, true )
 		end
 	elseif level > 0 then
-		local echo = action:gsub( "#A", "(静默消息)" .. nick, 1 )
+		local echo = action:gsub( "#A", "(SILENT)" .. nick, 1 )
 		ULib.tsay( ply, echo, true ) -- Whether or not the originating player has access, they're getting the echo.
 
 		local players = player.GetAll()
@@ -385,7 +385,7 @@ local function makePlayerList( calling_ply, target_list, showing_ply, use_self_s
 				table.insert( strs, "你自己" )
 			end
 		elseif not use_self_suffix or calling_ply ~= target_list[ i ] or anonymous then
-			table.insert( strs, target_list[ i ]:IsValid() and target_list[ i ]:Nick() or "(控制台)" )
+			table.insert( strs, target_list[ i ]:IsValid() and target_list[ i ]:Nick() or "(Console)" )
 		else
 			table.insert( strs, "自我" )
 		end

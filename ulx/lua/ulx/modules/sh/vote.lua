@@ -134,13 +134,13 @@ function ulx.vote( calling_ply, title, ... )
 	end
 
 	ulx.doVote( title, { ... }, voteDone )
-	ulx.fancyLogAdmin( calling_ply, "#A started a vote (#s)", title )
+	ulx.fancyLogAdmin( calling_ply, "#A 开始了一个投票 (#s)", title )
 end
 local vote = ulx.command( CATEGORY_NAME, "ulx vote", ulx.vote, "!vote" )
 vote:addParam{ type=ULib.cmds.StringArg, hint="title" }
 vote:addParam{ type=ULib.cmds.StringArg, hint="options", ULib.cmds.takeRestOfLine, repeat_min=2, repeat_max=10 }
 vote:defaultAccess( ULib.ACCESS_ADMIN )
-vote:help( "Starts a public vote." )
+vote:help( "开始公开投票." )
 
 -- Stop a vote in progress
 function ulx.stopVote( calling_ply )
@@ -167,7 +167,7 @@ local function voteMapDone2( t, changeTo, ply )
 	end
 
 	if shouldChange then
-		ULib.consoleCommand( "更改级别 " .. changeTo .. "\n" )
+		ULib.consoleCommand( "changelevel " .. changeTo .. "\n" )
 	end
 end
 
@@ -203,7 +203,7 @@ local function voteMapDone( t, argv, ply )
 		str = "投票结果:选项 '" .. t.options[ winner ] .. "' 赢了. (" .. winnernum .. "/" .. t.voters .. ")"
 		ULib.tsay( _, str )
 		ulx.logString( str )
-		ULib.consoleCommand( "更改级别 " .. changeTo .. "\n" )
+		ULib.consoleCommand( "changelevel " .. changeTo .. "\n" )
 		return
 	end
 
@@ -236,7 +236,7 @@ function ulx.votemap2( calling_ply, ... )
 	end
 end
 local votemap2 = ulx.command( CATEGORY_NAME, "ulx votemap2", ulx.votemap2, "!votemap2" )
-votemap2:addParam{ type=ULib.cmds.StringArg, completes=ulx.maps, hint="map", error="无效的地图 \"%s\" 指定的", ULib.cmds.restrictToCompletes, ULib.cmds.takeRestOfLine, repeat_min=1, repeat_max=10 }
+votemap2:addParam{ type=ULib.cmds.StringArg, completes=ulx.maps, hint="地图", error="invalid map \"%s\" specified", ULib.cmds.restrictToCompletes, ULib.cmds.takeRestOfLine, repeat_min=1, repeat_max=10 }
 votemap2:defaultAccess( ULib.ACCESS_ADMIN )
 votemap2:help( "开始公共地图投票." )
 if SERVER then ulx.convar( "votemap2Successratio", "0.5", _, ULib.ACCESS_ADMIN ) end -- The ratio needed for a votemap2 to succeed
@@ -278,7 +278,7 @@ local function voteKickDone( t, target, time, ply, reason )
 	local minVotes = GetConVarNumber( "ulx_votekickMinvotes" )
 	local str
 	if winner ~= 1 or winnernum < minVotes or winnernum / t.voters < ratioNeeded then
-		str = "Vote results: User will not be kicked. (" .. (results[ 1 ] or "0") .. "/" .. t.voters .. ")"
+		str = "投票结果: 用户不会被踢. (" .. (results[ 1 ] or "0") .. "/" .. t.voters .. ")"
 	else
 		if not target:IsValid() then
 			str = "投票结果:用户投票被踢，但已经离开."
@@ -361,7 +361,7 @@ local function voteBanDone( t, nick, steamid, time, ply, reason )
 	if winner ~= 1 or winnernum < minVotes or winnernum / t.voters < ratioNeeded then
 		str = "投票结果：用户不会被封禁. (" .. (results[ 1 ] or "0") .. "/" .. t.voters .. ")"
 	else
-		reason = ("[ULX 投票封禁] " .. (reason or "")):Trim()
+		reason = ("[投票封禁] " .. (reason or "")):Trim()
 		if ply:IsValid() then
 			str = "投票结果:用户现在将被禁封禁,等待批准. (" .. winnernum .. "/" .. t.voters .. ")"
 			ulx.doVote( "接受结果并封禁 " .. nick .. "?", { "是", "否" }, voteBanDone2, 30000, { ply }, true, nick, steamid, time, ply, reason )
@@ -387,16 +387,16 @@ function ulx.voteban( calling_ply, target_ply, minutes, reason )
 		return
 	end
 
-	local msg = "Ban " .. target_ply:Nick() .. " for " .. minutes .. " minutes?"
+	local msg = "封禁 " .. target_ply:Nick() .. " 给予 " .. minutes .. " 分钟?"
 	if reason and reason ~= "" then
 		msg = msg .. " (" .. reason .. ")"
 	end
 
 	ulx.doVote( msg, { "是", "否" }, voteBanDone, _, _, _, target_ply:Nick(), target_ply:SteamID(), minutes, calling_ply, reason )
 	if reason and reason ~= "" then
-		ulx.fancyLogAdmin( calling_ply, "#A 开始对 #T（#s）进行 #i 分钟的投票封禁", minutes, target_ply, reason )
+		ulx.fancyLogAdmin( calling_ply, "#A 进行 #i 分钟的投票封禁 并且对 #T (#s)", minutes, target_ply, reason )
 	else
-		ulx.fancyLogAdmin( calling_ply, "#A 开始对 #T 进行 #i 分钟的投票封禁", minutes, target_ply )
+		ulx.fancyLogAdmin( calling_ply, "#A 进行 #i 分钟的投票封禁  并且对 #T", minutes, target_ply )
 	end
 end
 local voteban = ulx.command( CATEGORY_NAME, "ulx voteban", ulx.voteban, "!voteban" )
