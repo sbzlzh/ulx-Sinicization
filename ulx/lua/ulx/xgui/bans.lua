@@ -424,9 +424,9 @@ function xgui.ConvertTime( seconds )
 	local minutes = math.floor( seconds/60 )
 	seconds = seconds - ( minutes * 60 )
 	local curtime = ""
-	if years ~= 0 then curtime = curtime .. years .. " 年" .. ( ( years > 1 ) and "s, " or ", " ) end
-	if weeks ~= 0 then curtime = curtime .. weeks .. " 周" .. ( ( weeks > 1 ) and "s, " or ", " ) end
-	if days ~= 0 then curtime = curtime .. days .. " 天" .. ( ( days > 1 ) and "s, " or ", " ) end
+	if years ~= 0 then curtime = curtime .. years .. " year" .. ( ( years > 1 ) and "s, " or ", " ) end
+	if weeks ~= 0 then curtime = curtime .. weeks .. " week" .. ( ( weeks > 1 ) and "s, " or ", " ) end
+	if days ~= 0 then curtime = curtime .. days .. " day" .. ( ( days > 1 ) and "s, " or ", " ) end
 	curtime = curtime .. ( ( hours < 10 ) and "0" or "" ) .. hours .. ":"
 	curtime = curtime .. ( ( minutes < 10 ) and "0" or "" ) .. minutes .. ":"
 	return curtime .. ( ( seconds < 10 and "0" or "" ) .. seconds )
