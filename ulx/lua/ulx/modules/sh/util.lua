@@ -235,7 +235,7 @@ function ulx.spectate( calling_ply, target_ply )
 
 		if player.ULXHasGod then player:GodEnable() end -- Restore if player had ulx god.
 		player:UnSpectate() -- Need this for DarkRP for some reason, works fine without it in sbox
-		ulx.fancyLogAdmin( calling_ply, true, "#A stopped spectating #T", target_ply )
+		ulx.fancyLogAdmin( calling_ply, true, "#A 停止偷窥 #T", target_ply )
 		ulx.clearExclusive( calling_ply )
 	end
 	hook.Add( "PlayerSpawn", "ulx_unspectatedspawn_" .. calling_ply:EntIndex(), stopSpectate, HOOK_MONITOR_HIGH )

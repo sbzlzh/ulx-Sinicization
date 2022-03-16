@@ -1,6 +1,6 @@
 ulx.LOW_ARGS = "您没有为此命令指定足够的参数.在控制台中键入'ulx help'以获取帮助."
 
-ulx.version = 3.73 -- Current release version. Don't access directly, use ULib.pluginVersionStr( "ULX" ) instead.
+ulx.version = 3.80 -- Current release version. Don't access directly, use ULib.pluginVersionStr( "ULX" ) instead.
 ulx.release = false -- Is this the release?
 
 ulx.ID_ORIGINAL = 1
