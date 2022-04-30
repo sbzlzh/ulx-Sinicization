@@ -321,7 +321,7 @@ function ulx.votekick( calling_ply, target_ply, reason )
 end
 local votekick = ulx.command( CATEGORY_NAME, "ulx votekick", ulx.votekick, "!votekick" )
 votekick:addParam{ type=ULib.cmds.PlayerArg }
-votekick:addParam{ type=ULib.cmds.StringArg, hint="原因", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
+votekick:addParam{ type=ULib.cmds.StringArg, hint="未说明", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
 votekick:defaultAccess( ULib.ACCESS_ADMIN )
 votekick:help( "开始公众投票踢出目标." )
 if SERVER then ulx.convar( "votekickSuccessratio", "0.6", _, ULib.ACCESS_ADMIN ) end -- The ratio needed for a votekick to succeed
@@ -402,7 +402,7 @@ end
 local voteban = ulx.command( CATEGORY_NAME, "ulx voteban", ulx.voteban, "!voteban" )
 voteban:addParam{ type=ULib.cmds.PlayerArg }
 voteban:addParam{ type=ULib.cmds.NumArg, min=0, default=1440, hint="分钟", ULib.cmds.allowTimeString, ULib.cmds.optional }
-voteban:addParam{ type=ULib.cmds.StringArg, hint="原因", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
+voteban:addParam{ type=ULib.cmds.StringArg, hint="未说明", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
 voteban:defaultAccess( ULib.ACCESS_ADMIN )
 voteban:help( "开始对目标进行公开封禁投票." )
 if SERVER then ulx.convar( "votebanSuccessratio", "0.7", _, ULib.ACCESS_ADMIN ) end -- The ratio needed for a voteban to succeed

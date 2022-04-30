@@ -78,13 +78,13 @@ function ulx.kick( calling_ply, target_ply, reason )
 end
 local kick = ulx.command( CATEGORY_NAME, "ulx kick", ulx.kick, "!kick" )
 kick:addParam{ type=ULib.cmds.PlayerArg }
-kick:addParam{ type=ULib.cmds.StringArg, hint="原因", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
+kick:addParam{ type=ULib.cmds.StringArg, hint="未说明", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
 kick:defaultAccess( ULib.ACCESS_ADMIN )
 kick:help( "踢出目标." )
 
 ------------------------------ Ban ------------------------------
 function ulx.ban( calling_ply, target_ply, minutes, reason )
-	if target_ply:IsListenServerHost() or target_ply:IsBot() then
+	if target_ply:IsListenServerHost() then
 		ULib.tsayError( calling_ply, "该玩家免疫封禁", true )
 		return
 	end
@@ -100,7 +100,7 @@ end
 local ban = ulx.command( CATEGORY_NAME, "ulx ban", ulx.ban, "!ban", false, false, true )
 ban:addParam{ type=ULib.cmds.PlayerArg }
 ban:addParam{ type=ULib.cmds.NumArg, hint="分钟,0 表示永久", ULib.cmds.optional, ULib.cmds.allowTimeString, min=0 }
-ban:addParam{ type=ULib.cmds.StringArg, hint="原因", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
+ban:addParam{ type=ULib.cmds.StringArg, hint="未说明", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
 ban:defaultAccess( ULib.ACCESS_ADMIN )
 ban:help( "封禁目标." )
 
@@ -122,7 +122,7 @@ function ulx.banid( calling_ply, steamid, minutes, reason )
 		end
 	end
 
-	if target_ply and (target_ply:IsListenServerHost() or target_ply:IsBot()) then
+	if target_ply and (target_ply:IsListenServerHost() ) then
 		ULib.tsayError( calling_ply, "该玩家免疫封禁", true )
 		return
 	end
@@ -143,7 +143,7 @@ end
 local banid = ulx.command( CATEGORY_NAME, "ulx banid", ulx.banid, nil, false, false, true )
 banid:addParam{ type=ULib.cmds.StringArg, hint="steamid" }
 banid:addParam{ type=ULib.cmds.NumArg, hint="分钟,0 表示永久", ULib.cmds.optional, ULib.cmds.allowTimeString, min=0 }
-banid:addParam{ type=ULib.cmds.StringArg, hint="原因", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
+banid:addParam{ type=ULib.cmds.StringArg, hint="未说明", ULib.cmds.optional, ULib.cmds.takeRestOfLine, completes=ulx.common_kick_reasons }
 banid:defaultAccess( ULib.ACCESS_SUPERADMIN )
 banid:help( "封禁 steamid." )
 
