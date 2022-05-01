@@ -98,7 +98,7 @@ end
 server.processModules()
 
 xgui.hookEvent( "onProcessModules", nil, server.processModules, "serverSettingsProcessModules" )
-xgui.addSettingModule( "服务器设定 ", server, "icon16/server.png", "xgui_svsettings" )
+xgui.addSettingModule( "服务端", server, "icon16/server.png", "xgui_svsettings" )
 
 
 ---------------------------
@@ -397,7 +397,7 @@ plist:Add( xlib.makelabel{ label="向被封禁的用户显示的消息", zpos=1 
 plist.txtBanMessage = xlib.maketextbox{ zpos=2, h=236, multiline=true }
 plist:Add( plist.txtBanMessage )
 plist:Add( xlib.makelabel{ label="插入变量:", zpos=3 } )
-plist.variablePicker = xlib.makecombobox{ choices={ "禁止人 - 管理员:创建封禁的 SteamID","禁止开始 - 创建封禁的日期/时间","原因","剩余时间","SteamID（不包括非数字字符）","SteamID64(适用于构建用于上诉禁令的 URL)" }, zpos=4 }
+plist.variablePicker = xlib.makecombobox{ choices={ "禁止人 - 管理员:创建封禁的 SteamID","禁止开始 - 创建封禁的日期/时间","原因","剩余时间","SteamID(不包括非数字字符）","SteamID64(适用于构建用于上诉禁令的 URL)" }, zpos=4 }
 plist:Add( plist.variablePicker )
 
 plist.btnPreview = xlib.makebutton{ label="预览封禁信息", zpos=4 }
@@ -818,7 +818,7 @@ plist.generator:Add( xlib.makelabel{ label="\n章节标题" } )
 local pnlFontSection = xlib.makepanel{h=80, parent=xgui.null }
 xlib.makelabel{ x=5, y=8, label="字体名称", parent=pnlFontSection }
 pnlFontSection.name = xlib.makecombobox{ x=65, y=5, w=190, enableinput=true, selectall=true, choices=commonFonts, parent=pnlFontSection }
-pnlFontSection.size = xlib.makeslider{ x=5, y=30, w=250, label="字体大小（像素）", value=16, min=4, max=72, parent=pnlFontSection }
+pnlFontSection.size = xlib.makeslider{ x=5, y=30, w=250, label="字体大小(像素）", value=16, min=4, max=72, parent=pnlFontSection }
 xlib.makelabel{ x=5, y=58, label="字体粗细", parent=pnlFontSection }
 pnlFontSection.weight = xlib.makecombobox{ x=72, y=55, w=183, enableinput=true, selectall=true, choices=fontWeights, parent=pnlFontSection }
 plist.generator:Add( pnlFontSection )
@@ -1174,7 +1174,7 @@ plist:Add( xlib.makelabel{ label="预留插槽设置" } )
 plist:Add( xlib.makecombobox{ repconvar="ulx_rslotsMode", isNumberConvar=true, choices={ "0 - 保留插槽禁用", "1 - 管理员填充插槽", "2 - 管理员不填充插槽", "3 - 管理员踢最新玩家" } } )
 plist:Add( xlib.makeslider{ label="预留槽位数", min=0, max=game.MaxPlayers(), repconvar="ulx_rslots" } )
 plist:Add( xlib.makecheckbox{ label="保留插槽可见", repconvar="ulx_rslotsVisible" } )
-plist:Add( xlib.makelabel{ w=265, wordwrap=true, label="保留插槽模式信息:\n1 - 设置一定数量的为管理员保留的空位-- 当管理员加入时,他们将填满这些空位.\n2 - 与 #1 相同,但管理员不会填满空位-- 当玩家离开时,他们将被释放.\n3 - 始终为管理员打开 1 个插槽,如果已满,则在管理员加入时以最短的连接时间踢用户,从而保持 1 个插槽打开.\n\n保留插槽可见:\n启用时,如果没有常规玩家服务器中可用的插槽,看起来服务器已满。这样做的主要缺点是管理员无法使用'查找服务器'对话框连接到服务器.相反,他们必须转到控制台并使用命令'connect <ip>'" } )
+plist:Add( xlib.makelabel{ w=265, wordwrap=true, label="保留插槽模式信息:\n1 - 设置一定数量的为管理员保留的空位-- 当管理员加入时,他们将填满这些空位.\n2 - 与 #1 相同,但管理员不会填满空位-- 当玩家离开时,他们将被释放.\n3 - 始终为管理员打开 1 个插槽,如果已满,则在管理员加入时以最短的连接时间踢用户,从而保持 1 个插槽打开.\n\n保留插槽可见:\n启用时,如果没有常规玩家服务器中可用的插槽,看起来服务器已满.这样做的主要缺点是管理员无法使用'查找服务器'对话框连接到服务器.相反,他们必须转到控制台并使用命令'connect <ip>'" } )
 xgui.addSubModule( "预留插槽", plist, nil, "server" )
 
 ------------------------Votekick/Voteban-------------------------

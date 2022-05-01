@@ -86,7 +86,7 @@ function maps.updateVoteMaps()
 	maps.nextlevel:Clear()
 
 	if LocalPlayer():query( "ulx map" ) then --Show all maps for admins who have access to change the level
-		maps.maplabel:SetText( "服务器地图（投票地图突出显示)" )
+		maps.maplabel:SetText( "服务器地图(投票地图突出显示)" )
 		maps.nextlevel:AddChoice( "<未标明>" )
 		maps.nextlevel.ConVarUpdated( "nextlevel", "rep_nextlevel", nil, nil, GetConVar( "rep_nextlevel" ):GetString() )
 		maps.nextLevelLabel:SetAlpha(255);

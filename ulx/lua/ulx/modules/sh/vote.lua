@@ -137,8 +137,8 @@ function ulx.vote( calling_ply, title, ... )
 	ulx.fancyLogAdmin( calling_ply, "#A 开始了一个投票 (#s)", title )
 end
 local vote = ulx.command( CATEGORY_NAME, "ulx vote", ulx.vote, "!vote" )
-vote:addParam{ type=ULib.cmds.StringArg, hint="title" }
-vote:addParam{ type=ULib.cmds.StringArg, hint="options", ULib.cmds.takeRestOfLine, repeat_min=2, repeat_max=10 }
+vote:addParam{ type=ULib.cmds.StringArg, hint="标题" }
+vote:addParam{ type=ULib.cmds.StringArg, hint="选项", ULib.cmds.takeRestOfLine, repeat_min=2, repeat_max=10 }
 vote:defaultAccess( ULib.ACCESS_ADMIN )
 vote:help( "开始公开投票." )
 
@@ -281,7 +281,7 @@ local function voteKickDone( t, target, time, ply, reason )
 		str = "投票结果: 用户不会被踢. (" .. (results[ 1 ] or "0") .. "/" .. t.voters .. ")"
 	else
 		if not target:IsValid() then
-			str = "投票结果:用户投票被踢，但已经离开."
+			str = "投票结果:用户投票被踢,但已经离开."
 		elseif ply:IsValid() then
 			str = "投票结果:用户现在将被踢出,等待批准. (" .. winnernum .. "/" .. t.voters .. ")"
 			ulx.doVote( "接受结果并踢 " .. target:Nick() .. "?", { "是", "否" }, voteKickDone2, 30000, { ply }, true, target, time, ply, reason )

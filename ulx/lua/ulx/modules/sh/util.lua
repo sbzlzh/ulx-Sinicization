@@ -171,7 +171,7 @@ unban:help( "解封 steamid." )
 ------------------------------ Noclip ------------------------------
 function ulx.noclip( calling_ply, target_plys )
 	if not target_plys[ 1 ]:IsValid() then
-		Msg( "你是神，不受凡人筑墙的束缚.\n" )
+		Msg( "你是神,不受凡人筑墙的束缚.\n" )
 		return
 	end
 
@@ -201,7 +201,7 @@ noclip:help( "允许目标飞行." )
 
 function ulx.spectate( calling_ply, target_ply )
 	if not calling_ply:IsValid() then
-		Msg( "您无法从专用服务器控制台观看.\n" )
+		Msg( "您无法从服务器控制台观看.\n" )
 		return
 	end
 
@@ -374,8 +374,8 @@ debuginfo:help( "Dump some debug information." )
 
 function ulx.resettodefaults( calling_ply, param )
 	if param ~= "FORCE" then
-		local str = "你确定吗? 它将删除 ulx 创建的临时禁令,配置,组和一切!"
-		local str2 = "如果您确定，请输入 \"ulx resettodefaults FORCE\""
+		local str = "你确定吗?它将删除 ulx 创建的临时禁令,配置,组和一切!"
+		local str2 = "如果您确定,请输入 \"ulx resettodefaults FORCE\""
 		if calling_ply:IsValid() then
 			ULib.tsayError( calling_ply, str, true )
 			ULib.tsayError( calling_ply, str2, true )

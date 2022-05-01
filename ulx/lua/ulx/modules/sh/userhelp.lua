@@ -45,7 +45,7 @@ ulx removeuser <user> - 从永久访问列表中删除指定的连接播放器.
 Ex 1. ulx removeuser "Foo bar" -- 这将删除用户 "Foo bar"
 
 ulx userallow <user> <access> [<access tag>] - 将访问权限放在 USER'S ALLOW 列表中,使用
-  可选访问标签（见上文）
+  可选访问标签(见上文）
 有关允许列表与拒绝列表的说明,以及访问字符串/标签的工作原理,请参见上文.
 Ex 1. ulx userallow "Pi" "ulx slap" -- 这授予用户访问"ulx slap"的权限
 Ex 2. ulx userallow "Pi" "ulx slap" "!%admin 0" -- 这授予用户访问"ulx slap"的权限
@@ -60,7 +60,7 @@ ulx addgroup <group> [<inherits from>] - 创建一个组,可选择从指定的�
 
 ulx removegroup <group> - 永久删除一个组.也从所有连接的组中删除
   用户和所有将来连接的用户.如果用户除此之外没有任何组,他们将
-  成为客人.请务必小心使用此命令！
+  成为客人.请务必小心使用此命令!
 
 ulx renamegroup <当前组> <新组> - 重命名组
 

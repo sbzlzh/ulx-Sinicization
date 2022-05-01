@@ -42,18 +42,18 @@ local function doAdvertCfg( path, noMount )
 	end
 
 	local data_root, err = ULib.parseKeyValues( ULib.stripComments( ULib.fileRead( path, noMount ), ";" ) )
-	if not data_root then Msg( "[ULX] 广告配置错误: " .. err .. "\n" ) return end
+	if not data_root then Msg( "[ULX] Error in advert config: " .. err .. "\n" ) return end
 
 	for group_name, row in pairs( data_root ) do
 		if type( group_name ) == "number" then -- Must not be a group
 			local color = Color( tonumber( row.red ) or ULib.DEFAULT_TSAY_COLOR.r, tonumber( row.green ) or ULib.DEFAULT_TSAY_COLOR.g, tonumber( row.blue ) or ULib.DEFAULT_TSAY_COLOR.b )
-			ulx.addAdvert( row.text or "没有为此广告提供文字", tonumber( row.time ) or 300, _, color, tonumber( row.time_on_screen ) )
+			ulx.addAdvert( row.text or "NO TEXT SUPPLIED FOR THIS ADVERT", tonumber( row.time ) or 300, _, color, tonumber( row.time_on_screen ) )
 		else -- Must be a group
-			if type( row ) ~= "table" then Msg( "[ULX] 广告配置错误:广告格式不正确!\n" ) return end
+			if type( row ) ~= "table" then Msg( "[ULX] Error in advert config: Adverts are not properly formatted!\n" ) return end
 			for i=1, #row do
 				local row2 = row[ i ]
 				local color = Color( tonumber( row2.red ) or 151, tonumber( row2.green ) or 211, tonumber( row2.blue ) or 255 )
-				ulx.addAdvert( row2.text or "没有为此广告提供文字", tonumber( row2.time ) or 300, group_name, color, tonumber( row2.time_on_screen ) )
+				ulx.addAdvert( row2.text or "NO TEXT SUPPLIED FOR THIS ADVERT", tonumber( row2.time ) or 300, group_name, color, tonumber( row2.time_on_screen ) )
 			end
 		end
 	end
@@ -97,7 +97,7 @@ local function doMotdCfg( path, noMount )
 	end
 
 	local data_root, err = ULib.parseKeyValues( ULib.stripComments( ULib.fileRead( path, noMount ), ";" ) )
-	if not data_root then Msg( "[ULX] motd 配置错误: " .. err .. "\n" ) return end
+	if not data_root then Msg( "[ULX] Error in motd config: " .. err .. "\n" ) return end
 
 	ulx.motdSettings = data_root
 	ulx.populateMotdData()

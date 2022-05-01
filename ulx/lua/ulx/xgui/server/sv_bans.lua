@@ -3,7 +3,7 @@
 
 local bans={}
 function bans.init()
-	ULib.ucl.registerAccess( "xgui_managebans", "superadmin", "Allows addition, removal, and viewing of bans in XGUI.", "XGUI" )
+	ULib.ucl.registerAccess( "xgui_managebans", "superadmin", "允许在XGUI中添加,删除和查看禁令.", "XGUI" )
 
 	xgui.addDataType( "bans", function() return { count=table.Count( ULib.bans ) } end, "xgui_managebans", 30, 20 )
 	--Chat commands

@@ -262,7 +262,7 @@ function ulx.send( calling_ply, target_from, target_to )
 	target_from:SetEyeAngles( newang )
 	target_from:SetLocalVelocity( Vector( 0, 0, 0 ) ) -- Stop!
 
-	ulx.fancyLogAdmin( calling_ply, "#A 流放 #T 到 #T", target_from, target_to )
+	ulx.fancyLogAdmin( calling_ply, "#A 迫使 #T 传到 #T", target_from, target_to )
 end
 local send = ulx.command( CATEGORY_NAME, "ulx send", ulx.send, "!send" )
 send:addParam{ type=ULib.cmds.PlayerArg, target="!^" }

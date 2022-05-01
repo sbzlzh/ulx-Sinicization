@@ -74,7 +74,7 @@ end
 client.processModules()
 
 xgui.hookEvent( "onProcessModules", nil, client.processModules, "xguiProcessModules" )
-xgui.addSettingModule( "客户端设定", client, "icon16/layout_content.png" )
+xgui.addSettingModule( "客户端", client, "icon16/layout_content.png" )
 
 
 --------------------General Clientside Module--------------------
@@ -135,9 +135,6 @@ xgui.base.refreshSkin = true
 xguipnl.skinselect.OnSelect = function( self, index, value, data )
 	xgui.settings.skin = data
 	xgui.base:SetSkin( data )
-end
-for skin, skindata in pairs( derma.SkinList ) do
-	xguipnl.skinselect:AddChoice( skindata.PrintName, skin )
 end
 
 ----------------

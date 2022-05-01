@@ -223,7 +223,7 @@ function xgui.load_helpers()
 
 	--Load control interpretations for ULib argument types
 	function ULib.cmds.BaseArg.x_getcontrol( arg, argnum, parent )
-		return xlib.makelabel{ label="Not Supported", parent=parent }
+		return xlib.makelabel{ label="不支持", parent=parent }
 	end
 
 	function ULib.cmds.NumArg.x_getcontrol( arg, argnum, parent )
@@ -236,7 +236,7 @@ function xgui.load_helpers()
 			local max = restrictions.max or 10 * 60 * 24 * 365 --default slider max 10 years
 
 			local outPanel = xlib.makepanel{ h=40, parent=parent }
-			xlib.makelabel{ x=5, y=3, label="时间:", parent=outPanel }
+			xlib.makelabel{ x=5, y=3, label="封禁时间:", parent=outPanel }
 			outPanel.interval = xlib.makecombobox{ x=90, w=75, parent=outPanel }
 			outPanel.val = xlib.makeslider{ w=165, y=20, label="<--->", min=min, max=max, value=min, decimal=0, parent=outPanel }
 

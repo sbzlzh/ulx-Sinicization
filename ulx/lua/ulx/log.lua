@@ -385,7 +385,7 @@ local function makePlayerList( calling_ply, target_list, showing_ply, use_self_s
 				table.insert( strs, "你自己" )
 			end
 		elseif not use_self_suffix or calling_ply ~= target_list[ i ] or anonymous then
-			table.insert( strs, target_list[ i ]:IsValid() and target_list[ i ]:Nick() or "(Console)" )
+			table.insert( strs, target_list[ i ]:IsValid() and target_list[ i ]:Nick() or "(控制台)" )
 		else
 			table.insert( strs, "自我" )
 		end

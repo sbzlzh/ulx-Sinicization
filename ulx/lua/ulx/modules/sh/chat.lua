@@ -4,7 +4,7 @@ CATEGORY_NAME = "聊天"
 ------------------------------ Psay ------------------------------
 function ulx.psay( calling_ply, target_ply, message )
 	if calling_ply:GetNWBool( "ulx_muted", false ) then
-		ULib.tsayError( calling_ply, "你被静音了，因此不能说话！如果紧急，请使用 asay 进行管理员聊天.", true )
+		ULib.tsayError( calling_ply, "你被静音了,因此不能说话!如果紧急,请使用 asay 进行管理员聊天.", true )
 		return
 	end
 
@@ -12,7 +12,7 @@ function ulx.psay( calling_ply, target_ply, message )
 end
 local psay = ulx.command( CATEGORY_NAME, "ulx psay", ulx.psay, "!p", true )
 psay:addParam{ type=ULib.cmds.PlayerArg, target="!^", ULib.cmds.ignoreCanTarget }
-psay:addParam{ type=ULib.cmds.StringArg, hint="message", ULib.cmds.takeRestOfLine }
+psay:addParam{ type=ULib.cmds.StringArg, hint="消息", ULib.cmds.takeRestOfLine }
 psay:defaultAccess( ULib.ACCESS_ALL )
 psay:help( "向目标发送私信." )
 
@@ -27,7 +27,7 @@ function ulx.asay( calling_ply, message )
 		format = "(管理) *** #P #s"
 		message = message:sub( me:len() + 1 )
 	else
-		format = "#P 到： #s"
+		format = "#P发送到管理:#s"
 	end
 
 	local players = player.GetAll()
@@ -41,7 +41,7 @@ function ulx.asay( calling_ply, message )
 	ulx.fancyLog( players, format, calling_ply, message )
 end
 local asay = ulx.command( CATEGORY_NAME, "ulx asay", ulx.asay, "@", true, true )
-asay:addParam{ type=ULib.cmds.StringArg, hint="message", ULib.cmds.takeRestOfLine }
+asay:addParam{ type=ULib.cmds.StringArg, hint="消息", ULib.cmds.takeRestOfLine }
 asay:defaultAccess( ULib.ACCESS_ALL )
 asay:help( "将消息发送到当前已经连接的管理员." )
 
@@ -54,7 +54,7 @@ function ulx.tsay( calling_ply, message )
 	end
 end
 local tsay = ulx.command( CATEGORY_NAME, "ulx tsay", ulx.tsay, "@@", true, true )
-tsay:addParam{ type=ULib.cmds.StringArg, hint="message", ULib.cmds.takeRestOfLine }
+tsay:addParam{ type=ULib.cmds.StringArg, hint="消息", ULib.cmds.takeRestOfLine }
 tsay:defaultAccess( ULib.ACCESS_ADMIN )
 tsay:help( "发送一段话到每个人的聊天框." )
 
@@ -67,7 +67,7 @@ function ulx.csay( calling_ply, message )
 	end
 end
 local csay = ulx.command( CATEGORY_NAME, "ulx csay", ulx.csay, "@@@", true, true )
-csay:addParam{ type=ULib.cmds.StringArg, hint="message", ULib.cmds.takeRestOfLine }
+csay:addParam{ type=ULib.cmds.StringArg, hint="消息", ULib.cmds.takeRestOfLine }
 csay:defaultAccess( ULib.ACCESS_ADMIN )
 csay:help( "给每个人发个在屏幕中间的信息." )
 
@@ -282,7 +282,7 @@ if SERVER then
 			if not bTeam then
 				ULib.tsay( _, strText )
 			else
-				strText = "(团队) " .. strText
+				strText = "(TEAM) " .. strText
 				local teamid = ply:Team()
 				local players = team.GetPlayers( teamid )
 				for _, ply2 in ipairs( players ) do

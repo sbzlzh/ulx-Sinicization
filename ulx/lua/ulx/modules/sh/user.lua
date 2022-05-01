@@ -142,7 +142,7 @@ function ulx.userallow( calling_ply, target_ply, access_string, access_tag )
 		if not access_tag or access_tag == "" then
 			ulx.fancyLogAdmin( calling_ply, "#A 授予访问权限 #q 到 #T", access_string, target_ply )
 		else
-			ulx.fancyLogAdmin( calling_ply, "#A 授予的访问权限 #q，带有标签 #q 到 #T", access_string, access_tag, target_ply )
+			ulx.fancyLogAdmin( calling_ply, "#A 授予的访问权限 #q,带有标签 #q 到 #T", access_string, access_tag, target_ply )
 		end
 	end
 end
@@ -180,7 +180,7 @@ function ulx.userallowid( calling_ply, id, access_string, access_tag )
 		if not access_tag or access_tag == "" then
 			ulx.fancyLogAdmin( calling_ply, "#A 授予对 #s 的访问权限 #q", access_string, name )
 		else
-			ulx.fancyLogAdmin( calling_ply, "#A 授予的访问权限 #q，带有标签 #q 到 #s", access_string, access_tag, name )
+			ulx.fancyLogAdmin( calling_ply, "#A 授予的访问权限 #q,带有标签 #q 到 #s", access_string, access_tag, name )
 		end
 	end
 end
@@ -214,7 +214,7 @@ end
 local userdeny = ulx.command( CATEGORY_NAME, "ulx userdeny", ulx.userdeny, nil, false, false, true )
 userdeny:addParam{ type=ULib.cmds.PlayerArg }
 userdeny:addParam{ type=ULib.cmds.StringArg, hint="命令" } -- TODO, add completes for this
-userdeny:addParam{ type=ULib.cmds.BoolArg, hint="删除明确的允许或拒绝，而不是完全拒绝", ULib.cmds.optional }
+userdeny:addParam{ type=ULib.cmds.BoolArg, hint="删除明确的允许或拒绝,而不是完全拒绝", ULib.cmds.optional }
 userdeny:defaultAccess( ULib.ACCESS_SUPERADMIN )
 userdeny:help( "从用户的访问权限中删除." )
 

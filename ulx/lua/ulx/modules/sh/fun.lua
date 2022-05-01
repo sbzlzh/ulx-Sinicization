@@ -59,14 +59,14 @@ function ulx.whip( calling_ply, target_plys, times, dmg )
 		end
 	end
 
-	ulx.fancyLogAdmin( calling_ply, "#A 鞭打 #T #i 次 并造成 #i 伤害", affected_plys, times, dmg )
+	ulx.fancyLogAdmin( calling_ply, "#A 鞭打 #T #i 次并造成 #i 伤害", affected_plys, times, dmg )
 end
 local whip = ulx.command( CATEGORY_NAME, "ulx whip", ulx.whip, "!whip" )
 whip:addParam{ type=ULib.cmds.PlayersArg }
 whip:addParam{ type=ULib.cmds.NumArg, min=2, max=100, default=10, hint="次数", ULib.cmds.optional, ULib.cmds.round }
 whip:addParam{ type=ULib.cmds.NumArg, min=0, default=0, hint="伤害", ULib.cmds.optional, ULib.cmds.round }
 whip:defaultAccess( ULib.ACCESS_ADMIN )
-whip:help( "给某人下毒,并每秒获得选定伤害." )
+whip:help( "掌嘴目标,并每秒获得选定伤害." )
 
 ------------------------------ Slay ------------------------------
 function ulx.slay( calling_ply, target_plys )
@@ -258,7 +258,7 @@ freeze:setOpposite( "ulx unfreeze", {_, _, true}, "!unfreeze" )
 function ulx.god( calling_ply, target_plys, should_revoke )
 	if not target_plys[ 1 ]:IsValid() then
 		if not should_revoke then
-			Msg( "你是控制台，你已经是神.\n" )
+			Msg( "你是控制台,你已经是神.\n" )
 		else
 			Msg( "你的上帝地位是不可改变的;如果你不喜欢它,离开矩阵.\n" )
 		end

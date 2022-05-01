@@ -81,7 +81,7 @@ function groups.pnlG1:Close()
 end
 xlib.makelabel{ x=5, y=5, label="组内用户:", parent=groups.pnlG1 }
 groups.players = xlib.makelistview{ x=5, y=20, w=160, h=190, parent=groups.pnlG1 }
-groups.players:AddColumn( "Name" )
+groups.players:AddColumn( "名字" )
 groups.players.OnRowSelected = function( self, LineID, Line )
 	groups.cplayer:SetDisabled( false )
 end

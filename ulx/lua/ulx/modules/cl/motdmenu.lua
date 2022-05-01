@@ -15,7 +15,7 @@ function ulx.showMotdMenu( steamid )
 		window:SetSize( 640, 480 )
 	end
 	window:Center()
-	window:SetTitle( "公告" )
+	window:SetTitle( "ULX MOTD" )
 	window:SetVisible( true )
 	window:MakePopup()
 
@@ -23,7 +23,7 @@ function ulx.showMotdMenu( steamid )
 	--html:SetAllowLua( true ) -- Too much of a security risk for us to enable. Feel free to uncomment if you know what you're doing.
 
 	local button = vgui.Create( "DButton", window )
-	button:SetText( "关闭" )
+	button:SetText( "Close" )
 	button.DoClick = function() window:Close() end
 	button:SetSize( 100, 40 )
 	button:SetPos( (window:GetWide() - button:GetWide()) / 2, window:GetTall() - button:GetTall() - 10 )
